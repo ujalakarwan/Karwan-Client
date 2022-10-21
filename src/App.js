@@ -95,7 +95,7 @@ function App() {
             />
           </Route>
         )}
-        {/* <Route exact path="/*" element={<> Error 404 | Page Not found </>} /> */}
+        {/* <Route exact path="/*" element={<> Error 404 | Page Not founddd </>} /> */}
       </Routes>
     </>
   );
