@@ -15,18 +15,25 @@ import EditGroup from "./Components/DisplayItems/EditGroup";
 import EditBook from "./Components/DisplayItems/EditBook";
 import EditBookRequest from "./Components/DisplayItems/EditBookRequest";
 import EditVideo from "./Components/DisplayItems/EditVideo";
+import EditHotel from "./Components/DisplayItems/EditHotel"
+import EditTransport from "./Components/DisplayItems/EditTransport"
+
 import AllProductCarts from "./Pages/AllProductCarts";
 import EditProductCart from "./Components/DisplayItems/EditProductCart";
 import AllSupplications from "./Pages/AllSupplications";
 import EditSupplication from "./Components/DisplayItems/EditSupplication";
 import AddUser from "./Pages/AddUser";
 import AllProducts from "./Pages/AllProducts";
+import AllHotels from "./Pages/AllHotels";
+import AllTransports from "./Pages/AllTransport";
+
 import EditProduct from "./Components/DisplayItems/EditProduct";
 import AddProduct from "./Pages/AddProduct";
 import AddSupplication from "./Pages/AddSupplication";
 import AllBanners from "./Pages/AllBanners";
 import AddBanner from "./Pages/AddBanner";
-
+import AddHotel from "./Pages/AddHotel";
+import AddTransport from "./Pages/AddTransport";
 function App() {
   // const isLoggedIn = localStorage.getItem("isLoggedIn");
   return (
@@ -40,6 +47,9 @@ function App() {
             <Route path="/dashboard/duas" element={<AllSupplications />} />
             <Route path="/dashboard/books" element={<AllBooks />} />
             <Route path="/dashboard/products" element={<AllProducts />} />
+            <Route path="/dashboard/hotels" element={<AllHotels/>} />
+            <Route path="/dashboard/transports" element={<AllTransports/>} />
+
             <Route path="/dashboard/banners" element={<AllBanners />} />
             <Route
               path="/dashboard/productCarts"
@@ -60,6 +70,9 @@ function App() {
             <Route path="/dashboard/add-user" element={<AddUser />} />
             <Route path="/dashboard/add-banner" element={<AddBanner />} />
             <Route path="/dashboard/add-product" element={<AddProduct />} />
+            <Route path="/dashboard/add-hotel" element={<AddHotel />} />
+            <Route path="/dashboard/add-transport" element={<AddTransport />} />
+
             <Route path="/dashboard/add-dua" element={<AddSupplication />} />
             <Route path="/dashboard/add-group" element={<AddGroup />} />
 
@@ -68,6 +81,14 @@ function App() {
             <Route
               path="/dashboard/edit-product/:productId"
               element={<EditProduct />}
+            />
+            <Route
+              path="/dashboard/edit-hotel/:productId"
+              element={<EditHotel />}
+            />
+            <Route
+              path="/dashboard/edit-transport/:productId"
+              element={<EditTransport />}
             />
             <Route
               path="/dashboard/edit-productCart/:productCartId"

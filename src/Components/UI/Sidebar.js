@@ -37,10 +37,14 @@ const Sidebar = (props) => {
     { key: "11", name: "Add Dua", route: "/dashboard/add-dua" },
     { key: "12", name: "Products", route: "/dashboard/products" },
     { key: "13", name: "Add Product", route: "/dashboard/add-product" },
-    { key: "14", name: "Orders", route: "/dashboard/productCarts" },
-    { key: "15", name: "Books", route: "/dashboard/books" },
-    { key: "16", name: "Book Requests", route: "/dashboard/book-requests" },
-    { key: "17", name: "Logout", route: "/", logout: true },
+    { key: "14", name: "Hotels", route: "/dashboard/hotels" },
+    { key: "15", name: "Add Hotel", route: "/dashboard/add-hotel" },
+    { key: "16", name: "Transports", route: "/dashboard/transports" },
+    { key: "17", name: "Add Transport", route: "/dashboard/add-transport" },
+    { key: "18", name: "Orders", route: "/dashboard/productCarts" },
+    { key: "19", name: "Books", route: "/dashboard/books" },
+    { key: "20", name: "Book Requests", route: "/dashboard/book-requests" },
+    { key: "21", name: "Logout", route: "/", logout: true },
   ];
 
   return (
