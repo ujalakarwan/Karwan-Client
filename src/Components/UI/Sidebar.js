@@ -42,9 +42,11 @@ const Sidebar = (props) => {
     { key: "16", name: "Transports", route: "/dashboard/transports" },
     { key: "17", name: "Add Transport", route: "/dashboard/add-transport" },
     { key: "18", name: "Orders", route: "/dashboard/productCarts" },
-    { key: "19", name: "Books", route: "/dashboard/books" },
-    { key: "20", name: "Book Requests", route: "/dashboard/book-requests" },
-    { key: "21", name: "Logout", route: "/", logout: true },
+    { key: "19", name: "Hotel Bookings", route: "/dashboard/hotelbookings" },
+    { key: "20", name: "Transport Bookings", route: "/dashboard/transportbookings" },
+    { key: "21", name: "Books", route: "/dashboard/books" },
+    { key: "22", name: "Book Requests", route: "/dashboard/book-requests" },
+    { key: "23", name: "Logout", route: "/", logout: true },
   ];
 
   return (

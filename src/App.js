@@ -17,9 +17,14 @@ import EditBookRequest from "./Components/DisplayItems/EditBookRequest";
 import EditVideo from "./Components/DisplayItems/EditVideo";
 import EditHotel from "./Components/DisplayItems/EditHotel"
 import EditTransport from "./Components/DisplayItems/EditTransport"
+import AllHotelBookings from "./Pages/AllHotelBookings"
+import AllTransportBookings from "./Pages/AllTransportBookings"
 
 import AllProductCarts from "./Pages/AllProductCarts";
 import EditProductCart from "./Components/DisplayItems/EditProductCart";
+import EditHotelBooking from "./Components/DisplayItems/Edithotelbooking";
+import EditTransportBooking from "./Components/DisplayItems/Edittransportbooking";
+
 import AllSupplications from "./Pages/AllSupplications";
 import EditSupplication from "./Components/DisplayItems/EditSupplication";
 import AddUser from "./Pages/AddUser";
@@ -34,6 +39,9 @@ import AllBanners from "./Pages/AllBanners";
 import AddBanner from "./Pages/AddBanner";
 import AddHotel from "./Pages/AddHotel";
 import AddTransport from "./Pages/AddTransport";
+import AllHotelBookingsHistory from "./Pages/AllHotelBookingsHistory"
+import AllTransportBookingsHistory from "./Pages/AllTransportBookingsHistory"
+
 function App() {
   // const isLoggedIn = localStorage.getItem("isLoggedIn");
   return (
@@ -49,6 +57,10 @@ function App() {
             <Route path="/dashboard/products" element={<AllProducts />} />
             <Route path="/dashboard/hotels" element={<AllHotels/>} />
             <Route path="/dashboard/transports" element={<AllTransports/>} />
+            <Route path="/dashboard/hotelbookings" element={<AllHotelBookings/>} />
+            <Route path="/dashboard/transportbookings" element={<AllTransportBookings/>} />
+            <Route path="/dashboard/hotelbookingshistory/:productId" element={<AllHotelBookingsHistory/>} />
+            <Route path="/dashboard/transportbookingshistory/:productId" element={<AllTransportBookingsHistory/>} />
 
             <Route path="/dashboard/banners" element={<AllBanners />} />
             <Route
@@ -93,6 +105,14 @@ function App() {
             <Route
               path="/dashboard/edit-productCart/:productCartId"
               element={<EditProductCart />}
+            />
+            <Route
+              path="/dashboard/edit-hotelbooking/:productCartId"
+              element={<EditHotelBooking />}
+            />
+            <Route
+              path="/dashboard/edit-transportbooking/:productCartId"
+              element={<EditTransportBooking />}
             />
             <Route
               path="/dashboard/edit-video/:videoId"

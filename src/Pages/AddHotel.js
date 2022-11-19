@@ -20,7 +20,7 @@ const AddProduct = () => {
   const [productPic, setProductPic] = useState();
   const [Rooms,setRooms]=useState([])
   const [distances,setdistances]=useState([])
-  const [room,setroom]=useState({Type:"",Size:"",Price:0,availability:[]})
+  const [room,setroom]=useState({Type:"",Size:"",id:0,Price:0,availability:[]})
   const [distance,setdistance]=useState({place:"",distance:""})
   const [fileBase64String, setFileBase64String] = useState("");
   const defaultProps = {
@@ -129,6 +129,26 @@ const AddProduct = () => {
             />
       <label className="text-secondary font-semibold">Room:</label>
       <div style={{display:'flex',flexDirection:'row'}}>
+      <label className="text-secondary">Id:</label>
+            <input
+              style={{width:"25%",marginLeft:20,marginRight:20}}
+              type="text"
+              label="Price:"
+              name="room.id"
+              onChange={(e) => {
+                var value={id:e.target.value}
+                if(Rooms.find((item)=>item.id==e.target.value)){
+                  alert("already exists")
+                  
+                }
+                else{
+                setroom(shopCart => ({
+                ...shopCart,
+                ...value
+              }))}
+            }}
+              value={room.id}
+            />
             <label className="text-secondary">Type:</label>
             <input
               style={{width:"25%",marginLeft:20,marginRight:20}}
@@ -178,7 +198,7 @@ const AddProduct = () => {
                 }
                 else{setRooms([room])}
                 console.log("saa",Rooms)
-                setroom({Type:"",Size:"",Price:0,availability:[]})
+                setroom({Type:"",Size:"",id:0,Price:0,availability:[]})
               }}>
               <div className="text-base p-1">Add</div>
             </Button>

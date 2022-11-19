@@ -19,7 +19,7 @@ const AddProduct = () => {
   const [showModal, setShowModal] = useState(false);
   const [productPic, setProductPic] = useState();
   const [Rooms,setRooms]=useState([])
-  const [room,setroom]=useState({Type:"",id:0,Price:0,availability:[],images:""})
+  const [room,setroom]=useState({Type:"",id:0,Price:0,availability:[]})
   const [fileBase64String, setFileBase64String] = useState("");
   const defaultProps = {
     center: {
@@ -60,7 +60,7 @@ const AddProduct = () => {
     initialValues: {
       Name: "",
       Facilities: "",
-    //  images:fileBase64String,
+     images:fileBase64String,
       Vehicle: [],
      
     },
@@ -119,10 +119,15 @@ const AddProduct = () => {
               name="room.id"
               onChange={(e) => {
                 var value={id:e.target.value}
+                if(Rooms.find((item)=>item.id==e.target.value)){
+                  alert("already exists")
+                  
+                }
+                else{
                 setroom(shopCart => ({
                 ...shopCart,
                 ...value
-              }))}}
+              }))}}}
               value={room.id}
             />
             <label className="text-secondary">Type:</label>
@@ -168,7 +173,25 @@ const AddProduct = () => {
               <div className="text-base p-1">Add</div>
             </Button>
             </div>
-            <div className="flex items-center gap-6 mr-4">
+           
+
+            {Rooms?.map((item,ind)=>(
+            <div style={{display:'flex',flexDirection:'row',borderWidth:2,borderColor:'black',borderRadius:2,padding:7,alignSelf:'center'}}>
+            <label className="text-secondary" style={{marginRight:10,fontWeight:'bold'}}>Id: </label>
+            <p style={{marginRight:20}}>{item.id}</p>
+            <label className="text-secondary" style={{marginRight:10,fontWeight:'bold'}}>Type: </label>
+            <p style={{marginRight:20}}>{item.Type}</p>
+            
+            <label className="text-secondary" style={{marginRight:10,fontWeight:'bold'}}>Price: </label>
+            <p style={{marginRight:20}}>{item.Price}</p>
+            <Button
+              type="button" onClick={()=>
+              setRooms(Rooms.filter((it,index)=>index!=ind))}>
+              <div style={{marginBottom:2}}>delete</div>
+            </Button>
+            </div>
+            ))}
+             <div className="flex items-center gap-6 mr-4">
             <p className="text-l" style={{fontweight:'bold'}}>Images</p>
 
 
@@ -187,23 +210,6 @@ const AddProduct = () => {
                 Upload
               </InputFile>
             </div>
-
-            {Rooms?.map((item,ind)=>(
-            <div style={{display:'flex',flexDirection:'row',borderWidth:2,borderColor:'black',borderRadius:2,padding:7,alignSelf:'center'}}>
-            <label className="text-secondary" style={{marginRight:10,fontWeight:'bold'}}>Id: </label>
-            <p style={{marginRight:20}}>{item.id}</p>
-            <label className="text-secondary" style={{marginRight:10,fontWeight:'bold'}}>Type: </label>
-            <p style={{marginRight:20}}>{item.Type}</p>
-            
-            <label className="text-secondary" style={{marginRight:10,fontWeight:'bold'}}>Price: </label>
-            <p style={{marginRight:20}}>{item.Price}</p>
-            <Button
-              type="button" onClick={()=>
-              setRooms(Rooms.filter((it,index)=>index!=ind))}>
-              <div style={{marginBottom:2}}>delete</div>
-            </Button>
-            </div>
-            ))}
            
           </section>
           

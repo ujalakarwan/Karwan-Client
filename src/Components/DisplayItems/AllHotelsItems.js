@@ -54,7 +54,7 @@ const AllProductsItems = ({ product, productCart, setProductCart }) => {
               
             </div>
             <div className="flex items-center gap-2">
-              <p className=" text-[#404852]">Distanes from HolyPlaces</p>
+              <p className=" text-[#404852]">Distances from HolyPlaces</p>
               <p className=" text-[#404852] self-end">:</p>
               {product?.distances.map((it)=>(
                 <p className="text-primary font-semibold opacity-70">
