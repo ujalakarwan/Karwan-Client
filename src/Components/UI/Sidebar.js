@@ -24,7 +24,8 @@ const Sidebar = (props) => {
   };
 
   const sidebarList = [
-    { key: "1", name: "Users", route: "/dashboard/users" },
+    { key: "0", name: "Users", route: "/dashboard/users" },
+    { key: "1", name: "Family", route: "/dashboard/family" },
     { key: "2", name: "Add User", route: "/dashboard/add-user" },
     { key: "3", name: "Visa Requests", route: "/dashboard/visa-requests" },
     { key: "4", name: "Groups", route: "/dashboard/groups" },

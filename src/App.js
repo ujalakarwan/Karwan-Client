@@ -31,7 +31,7 @@ import AddUser from "./Pages/AddUser";
 import AllProducts from "./Pages/AllProducts";
 import AllHotels from "./Pages/AllHotels";
 import AllTransports from "./Pages/AllTransport";
-
+import AllFamily from "./Pages/Family"
 import EditProduct from "./Components/DisplayItems/EditProduct";
 import AddProduct from "./Pages/AddProduct";
 import AddSupplication from "./Pages/AddSupplication";
@@ -41,7 +41,7 @@ import AddHotel from "./Pages/AddHotel";
 import AddTransport from "./Pages/AddTransport";
 import AllHotelBookingsHistory from "./Pages/AllHotelBookingsHistory"
 import AllTransportBookingsHistory from "./Pages/AllTransportBookingsHistory"
-
+import EditFamily from "./Components/DisplayItems/EditFamily"
 function App() {
   // const isLoggedIn = localStorage.getItem("isLoggedIn");
   return (
@@ -61,6 +61,7 @@ function App() {
             <Route path="/dashboard/transportbookings" element={<AllTransportBookings/>} />
             <Route path="/dashboard/hotelbookingshistory/:productId" element={<AllHotelBookingsHistory/>} />
             <Route path="/dashboard/transportbookingshistory/:productId" element={<AllTransportBookingsHistory/>} />
+            <Route path="/dashboard/family" element={<AllFamily />} />
 
             <Route path="/dashboard/banners" element={<AllBanners />} />
             <Route
@@ -87,6 +88,7 @@ function App() {
 
             <Route path="/dashboard/add-dua" element={<AddSupplication />} />
             <Route path="/dashboard/add-group" element={<AddGroup />} />
+            <Route path="/dashboard/edit-family/:userId" element={<EditFamily />} />
 
             <Route path="/dashboard/edit-user/:userId" element={<EditUser />} />
             <Route path="/dashboard/edit-book/:bookId" element={<EditBook />} />

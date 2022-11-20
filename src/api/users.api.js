@@ -29,10 +29,31 @@ const deleteUser = async (id) => {
   }
 };
 
+const updateFamily = async (id, formData) => {
+  try {
+    const res = await API.patch(`/update-family/${id}`, formData);
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteFamily = async (id,formData) => {
+  try {
+    const res = await API.delete(`/delete-family/${id}`,formData);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const userService = {
   addUser,
   updateUser,
   deleteUser,
+  updateFamily,
+  deleteFamily
 };
 
 export default userService;
