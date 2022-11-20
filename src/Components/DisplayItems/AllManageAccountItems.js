@@ -25,27 +25,14 @@ const AllUsersItems = ({ user, check, setCheck }) => {
               <div className="h-14 w-14 bg-slate-300 rounded-full" />
             )}
           </div>
-              <div>
-              <p >{user?.userName}</p>
-
-              <div className="flex" >
-              <p className=" text">Family Members</p>
-              <p className=" text">:</p>
-              {user?.family.map((it)=>(
-                <p className="text-primary font-semibold opacity-70">
-                {" "+it.name}
-              </p>
-              ))}
-            </div>
-            </div>
-              
+          <p className="flex items-center">{user?.userName}</p>
         </div>
-        
-        <div className="col-span lg:col-span-3">
+        <div className="col-span-2 lg:col-span-1">
           <Button
             onClick={() => {
-              navigate(`/dashboard/edit-family/${user._id}`);
-            }}>
+              navigate(`/dashboard/Accountdetails/${user._id}`);
+            }}
+          >
             Details
           </Button>
         </div>

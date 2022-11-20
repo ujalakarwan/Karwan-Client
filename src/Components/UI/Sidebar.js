@@ -47,7 +47,9 @@ const Sidebar = (props) => {
     { key: "20", name: "Transport Bookings", route: "/dashboard/transportbookings" },
     { key: "21", name: "Books", route: "/dashboard/books" },
     { key: "22", name: "Book Requests", route: "/dashboard/book-requests" },
-    { key: "23", name: "Logout", route: "/", logout: true },
+    { key: "23", name: "Manage Accounts", route: "/dashboard/Accounts" },
+
+    { key: "24", name: "Logout", route: "/", logout: true },
   ];
 
   return (

@@ -42,6 +42,8 @@ import AddTransport from "./Pages/AddTransport";
 import AllHotelBookingsHistory from "./Pages/AllHotelBookingsHistory"
 import AllTransportBookingsHistory from "./Pages/AllTransportBookingsHistory"
 import EditFamily from "./Components/DisplayItems/EditFamily"
+import Accountdetails from "./Components/DisplayItems/Accountdetails"
+import AccountManagement from "./Pages/AccountManagament"
 function App() {
   // const isLoggedIn = localStorage.getItem("isLoggedIn");
   return (
@@ -62,6 +64,8 @@ function App() {
             <Route path="/dashboard/hotelbookingshistory/:productId" element={<AllHotelBookingsHistory/>} />
             <Route path="/dashboard/transportbookingshistory/:productId" element={<AllTransportBookingsHistory/>} />
             <Route path="/dashboard/family" element={<AllFamily />} />
+            <Route path="/dashboard/Accounts" element={<AccountManagement />} />
+            <Route path="/dashboard/Accountdetails/:productId" element={<Accountdetails />} />
 
             <Route path="/dashboard/banners" element={<AllBanners />} />
             <Route
