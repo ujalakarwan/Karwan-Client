@@ -69,6 +69,7 @@ const EditProduct = () => {
     onSubmit: async (values) => {
       values.Room=Rooms
           values.distances=distances
+          values.images=fileBase64String
           console.log("sdaca",values)
       await hotelService.updateHotel(productId, values);
      navigate("/dashboard/hotels");

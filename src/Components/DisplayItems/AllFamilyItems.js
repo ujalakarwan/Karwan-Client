@@ -31,10 +31,13 @@ const AllUsersItems = ({ user, check, setCheck }) => {
               <div className="flex" >
               <p className=" text">Family Members</p>
               <p className=" text">:</p>
-              {user?.family.map((it)=>(
+              {user?.family?.map((it)=>(
+                <>
                 <p className="text-primary font-semibold opacity-70">
-                {" "+it.name}
+                {" "+it.name+""}
               </p>
+              <p className="opacity-0">{"d"}</p>
+              </>
               ))}
             </div>
             </div>

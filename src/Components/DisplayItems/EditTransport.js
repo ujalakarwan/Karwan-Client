@@ -58,10 +58,12 @@ const EditProduct = () => {
       Name: product?.Name,
       Facilities: product?.Facilities,
       Vehicle: product?.Vehicle,
+      images:fileBase64String
     },
     enableReinitialize: true,
     onSubmit: async (values) => {
       values.Vehicle=Rooms
+      values.images=fileBase64String
           console.log("sdaca",values)
       await hotelService.updateHotel(productId, values);
      navigate("/dashboard/transports");
