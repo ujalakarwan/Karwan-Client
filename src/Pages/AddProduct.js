@@ -75,18 +75,32 @@ const AddProduct = () => {
               ) : (
                 <div className="h-14 w-14 bg-slate-300 rounded-full" />
               )}
-              <InputFile
-                name="imagePath"
-                imageName={productPic?.name}
-                onChange={(e) => {
-                  setProductPic(e.target.files[0]);
-                }}
-                onUpload={() => {
-                  encodeFileBase64(productPic);
-                }}
-              >
-                Upload
-              </InputFile>
+               <label
+        className="block  py-1 px-2 cursor-pointer rounded text-center min-w-[8rem] max-w-[10rem]
+        border-2 border-dashed border-primary 
+        hover:border-3 hover:border-dashed hover:border-primary 
+        transition ease-out duration-1000"
+      >
+        <span className="text-sm">
+          {productPic?.name ? productPic?.name : "Choose image"}
+        </span>
+        <input className="hidden" type="file" name={productPic?.name}  onChange={(e) => {
+                  setProductPic(e.target.files[0])
+                  encodeFileBase64(productPic)
+                }} />
+      </label>
+
+    
+        <Button
+          type="button"
+          //onClick={() => {
+          //  encodeFileBase64(productPic);
+          //}}
+        >
+          Upload
+        </Button>
+    
+             
             </div>
             <Input
               width="full"

@@ -4,11 +4,14 @@ import { useNavigate } from "react-router-dom";
 import Backdrop from "../UI/BackdropModal";
 import Button from "../UI/Button";
 import Select from "../UI/Select";
-
+import hotelBooking from "../../api/hotelBooking.api" ;
 const AllProductsItems = ({ product, productCart, setProductCart }) => {
   let navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   console.log(product && product);
+  const [Type,settype]=useState()
+  const [AccountNo,setAccount]=useState()
+
   return (
     <div className="border">
                               { product?.bookedRoom?.map((products) =>(
@@ -30,12 +33,13 @@ const AllProductsItems = ({ product, productCart, setProductCart }) => {
 
         <div className="col-span lg:col-span">
           <p className=" text-secondary font-semibold">
-          {(products?.BookedCheckin)}
+          {(((new Date(products?.BookedCheckin)).getDate()+"/"+(new Date(products?.BookedCheckin)).getMonth()+"/"+(new Date(products?.BookedCheckin)).getFullYear()).toString())}
           </p>
         </div>
         <div>-</div>
         <div className="col-span lg:col-span-1" >
-          <p className="text-secondary font-semibold">{products?.BookedCheckout}</p>
+          <p className="text-secondary font-semibold">
+            {((new Date(products?.BookedCheckout)).getDate()+"/"+(new Date(products?.BookedCheckout)).getMonth()+"/"+(new Date(products?.BookedCheckout)).getFullYear()).toString()}</p>
         </div>
       </div>
                               ))}
@@ -49,6 +53,46 @@ const AllProductsItems = ({ product, productCart, setProductCart }) => {
               </p>
             </div>
           </div>
+
+          <div style={{display:'flex',flexDirection:'row',margin:5,height:"27%",justifyContent:"center"}}>
+        <label style={{margin:10}}>Type:</label>
+
+              <select
+                type="text"
+                name="Type"
+                style={{width:"10%"}}
+                onChange={(e)=>settype(e.target.value)}
+                value={Type}
+              >
+                <option value={"Cheque"}>Cheque</option>
+                <option value={"Advance"}>Advance</option>
+                
+              </select>
+            
+            <label style={{marginLeft:12,marginTop:10}} >Account No:</label>
+            <input
+              style={{width:"23%",marginLeft:20,marginRight:20}}
+              type="text"
+              label="Account No:"
+              name="AccountNo"
+              onChange={(e) => {
+                setAccount(e.target.value)}}
+              value={AccountNo}
+            />
+              
+            
+      <Button
+        onClick={async() => {
+
+          await hotelBooking.updateProductCart(product._id, {
+            paymentstatus: {Type:Type,AccountNo:AccountNo},
+          });
+          navigate("/dashboard/Accounts");
+        }}
+      >
+        Add Payment
+      </Button>
+    </div>
       <Backdrop
         title="Remove User!"
         show={showModal}

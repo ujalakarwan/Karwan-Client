@@ -3,9 +3,10 @@ import Input from "../UI/Input";
 import { useFormik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import Card from "../UI/Card";
-import Button from "../UI/Button";
 import Backdrop from "../UI/BackdropModal";
-
+import ReactToPrint from 'react-to-print';
+import { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 import useFetchDoc from "../../hooks/useFetchDoc";
 import InputFile from "../UI/InputFile";
 import TextArea from "../UI/TextArea";
@@ -13,6 +14,7 @@ import hotelService from "../../api/users.api";
 import AllProductsItems from "./AllProductsShow";
 import AllBookings from "./Allhotelbookings"
 import AllTBookings from "./Alltransportbookings"
+import { Button, IconButton, InputAdornment } from "@mui/material";
 
 const EditProduct = () => {
   const navigate = useNavigate();
@@ -39,7 +41,10 @@ const EditProduct = () => {
   );
 
   console.log("usad",transportbooking)
-
+  let componentRef = useRef(null);
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
   const [Users,setUsers]=useState(user?.family)
   useEffect(() => {
     setUser(user?.family)
@@ -53,7 +58,7 @@ const EditProduct = () => {
     <>
       <Card>
         <form
-     
+          ref={el => (componentRef = el)}
           className="flex flex-col flex-wrap gap-6 px-6 lg:px-14"
         >
           <h1 className="text-2xl">Account Details</h1>
@@ -134,22 +139,21 @@ const EditProduct = () => {
                   ))}
           </section>
           
+          
 
 
           
-          <Backdrop
-            title="Update"
-            show={showModal}
-            onClick={() => setShowModal(false)}
-          >
-            Are you sure you want to update Transport details?
-            <div className="self-end">
-              <Button type={"submit"} onClick={() => setShowModal(false)}>
-                OK
-              </Button>
-            </div>
-          </Backdrop>
+         
         </form>
+        <ReactToPrint
+          trigger={() =>
+          <div style={{marginTop:45,justifyContent:'center',placeContent:'center'}}>
+            <Button style={{ marginBottom: "10px",justifySelf:'center',height:"35%", width: 60, marginLeft: '90%', marginTop: 40,fontWeight:'bold',color:'white',backgroundColor:'darkblue' }} >
+            Print
+          </Button>
+          </div>}
+          content={() => componentRef}
+        />
       </Card>
     </>
   );

@@ -3,7 +3,7 @@ import API from "./baseURL";
 const addHotel = async (formData) => {
   try {
     const { data } = await API.post("/add-transport", formData);
-    console.log(data);
+    console.log("formData",data);
     return data;
   } catch (error) {
     console.log(error);

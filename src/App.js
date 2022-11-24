@@ -19,12 +19,10 @@ import EditHotel from "./Components/DisplayItems/EditHotel"
 import EditTransport from "./Components/DisplayItems/EditTransport"
 import AllHotelBookings from "./Pages/AllHotelBookings"
 import AllTransportBookings from "./Pages/AllTransportBookings"
-
 import AllProductCarts from "./Pages/AllProductCarts";
 import EditProductCart from "./Components/DisplayItems/EditProductCart";
 import EditHotelBooking from "./Components/DisplayItems/Edithotelbooking";
 import EditTransportBooking from "./Components/DisplayItems/Edittransportbooking";
-
 import AllSupplications from "./Pages/AllSupplications";
 import EditSupplication from "./Components/DisplayItems/EditSupplication";
 import AddUser from "./Pages/AddUser";
@@ -44,8 +42,9 @@ import AllTransportBookingsHistory from "./Pages/AllTransportBookingsHistory"
 import EditFamily from "./Components/DisplayItems/EditFamily"
 import Accountdetails from "./Components/DisplayItems/Accountdetails"
 import AccountManagement from "./Pages/AccountManagament"
+import Reviews from "./Pages/Reviews"
+import Wishlist from "./Pages/AllWishlists"
 function App() {
-  // const isLoggedIn = localStorage.getItem("isLoggedIn");
   return (
     <>
       <Routes>
@@ -66,6 +65,8 @@ function App() {
             <Route path="/dashboard/family" element={<AllFamily />} />
             <Route path="/dashboard/Accounts" element={<AccountManagement />} />
             <Route path="/dashboard/Accountdetails/:productId" element={<Accountdetails />} />
+            <Route path="/dashboard/Reviews/:productId" element={<Reviews />} />
+            <Route path="/dashboard/wishlists" element={<Wishlist />} />
 
             <Route path="/dashboard/banners" element={<AllBanners />} />
             <Route

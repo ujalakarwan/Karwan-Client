@@ -1,5 +1,4 @@
 {
-  "projects": {
-    "default": "karwan-admin"
-  }
+  "projects":{
+    "default":"karwan-admin"}
 }

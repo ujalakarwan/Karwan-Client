@@ -17,7 +17,7 @@ const AddProduct = () => {
   const navigate = useNavigate();
 
   const [showModal, setShowModal] = useState(false);
-  const [productPic, setProductPic] = useState();
+  const [productPic, setProductPic] = useState(null);
   const [Rooms,setRooms]=useState([])
   const [room,setroom]=useState({Type:"",id:0,Price:0,availability:[]})
   const [fileBase64String, setFileBase64String] = useState("");
@@ -30,37 +30,24 @@ const AddProduct = () => {
   };
   const encodeFileBase64 = (file) => {
     var reader = new FileReader();
-    var array=[]
-    var arr=file
-    console.log("gfdo",file)
-    
-      console.log("dbasj")
-      if (file) {
-         reader.readAsDataURL(file);
-       reader.onload =() => {
-          var Base64 = reader.result;
-
-          setFileBase64String(Base64);
-          const value={images:Base64}
-          setroom(shopCart => ({
-            ...shopCart,
-            ...value
-          }))
-        };
-        reader.onerror = (error) => {
-          console.log("error: ", error);
-        };
-      }
-    
-    console.log("arrya",fileBase64String)
-    
+    if (file) {
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        var Base64 = reader.result;
+        console.log(Base64);
+        setFileBase64String(Base64);
+      };
+      reader.onerror = (error) => {
+        console.log("error: ", error);
+      };
+    }
   };
 
   const formik = useFormik({
     initialValues: {
       Name: "",
       Facilities: "",
-     images:fileBase64String,
+     images:"",
       Vehicle: [],
      
     },
@@ -71,9 +58,12 @@ const AddProduct = () => {
         values.Name &&
         values.Facilities 
         ) {
-          values.Vehicle=Rooms
-          console.log("sdaca",values)
+          console.log("sda",fileBase64String)
           
+          values.Vehicle=Rooms
+          values.images=fileBase64String
+          console.log("sdaca",values)
+
         await transportService.addHotel(values);
         navigate("/dashboard/transports");
         setRooms([])
@@ -196,19 +186,28 @@ const AddProduct = () => {
 
 
 
-         
-            <InputFile
-                name="imagePath"
-                imageName={productPic?.name}
-                onChange={(e) => {
-                  setProductPic(e.target.files[0]);
-                }}
-                onUpload={() => {
-                  encodeFileBase64(productPic);
-                }}
-              >
-                Upload
-              </InputFile>
+            <label
+        className="block  py-1 px-2 cursor-pointer rounded text-center min-w-[8rem] max-w-[10rem]
+        border-2 border-dashed border-primary 
+        hover:border-3 hover:border-dashed hover:border-primary 
+        transition ease-out duration-1000"
+      >
+        <span className="text-sm">
+          {productPic?.name ? productPic?.name : "Choose image"}
+        </span>
+        <input className="hidden" type="file" name={productPic?.name}  onChange={(e) => {
+                  setProductPic(e.target.files[0])
+                  encodeFileBase64(e.target.files[0]);
+                }} />
+      </label>
+      <Button
+          type="button"
+          onClick={() => {
+            }}
+          
+        >
+          Upload
+        </Button>
             </div>
            
           </section>

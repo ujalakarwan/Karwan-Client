@@ -11,7 +11,7 @@ const ProductItems = ({ product, check, setCheck }) => {
   return (
     <>
       <div className="grid grid-cols-12 place-items-center text-center">
-        <div className="col-span-7 lg:col-span-9 flex place-self-start text-left font-semibold text-primary">
+        <div className="col-span-7 lg:col-span-8 flex place-self-start text-left font-semibold text-primary">
           <div className="grid place-items-center mr-4">
             {product?.productImage ? (
               <img
@@ -43,7 +43,16 @@ const ProductItems = ({ product, check, setCheck }) => {
             Edit
           </Button>
         </div>
-        <div className="col-span-3 lg:col-span-2">
+        <div className="col-span-2 lg:col-span-1">
+          <Button
+            onClick={() => {
+              navigate(`/dashboard/Reviews/${product._id}`,{state:{name:product.title,ratings:product.rating,reviews:product.reviews}});
+            }}
+          >
+            Reviews
+          </Button>
+        </div>
+        <div className="col-span-2 lg:col-span-1">
           <Button
             alt
             onClick={() => {

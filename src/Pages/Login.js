@@ -9,12 +9,13 @@ import Input from "../Components/UI/Input";
 import Button from "../Components/UI/Button";
 import { setUser } from "../redux/userSlice";
 import logo from "../Assets/Images/logo.png";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-
+  
   onAuthStateChanged(auth, (currentUser) => {
     dispatch(setUser(currentUser));
   });
@@ -34,7 +35,10 @@ const Login = () => {
       login(values.email, values.password);
     },
   });
-
+  const triggerResetEmail = async () => {
+    await sendPasswordResetEmail(auth, formik.values.email);
+    console.log("Password reset email sent")
+  }
   const login = async (email, password) => {
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
@@ -91,6 +95,9 @@ const Login = () => {
                 </div>
               ) : null}
             </div>
+          </div>
+          <div onClick={triggerResetEmail}>
+          <p className="text-sm">Forgot Password?</p>
           </div>
           <Button type={"submit"}>
             <p className="text-lg">Login</p>

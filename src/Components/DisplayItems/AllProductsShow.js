@@ -4,12 +4,15 @@ import { useNavigate } from "react-router-dom";
 import Backdrop from "../UI/BackdropModal";
 import Button from "../UI/Button";
 import Select from "../UI/Select";
-
+import Input from "../UI/Input";
+import { async } from "@firebase/util";
+import productCartService from "../../api/productCart.api";
 const AllProductsItems = ({ product, productCart, setProductCart }) => {
   let navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   console.log("dads",product && product);
-  
+  const [Type,settype]=useState();
+  const [AccountNo,setAccount]=useState()
   return (
     <div className="border">
     { product?.products?.map((products) =>(
@@ -46,17 +49,60 @@ const AllProductsItems = ({ product, productCart, setProductCart }) => {
         <div className="col-span-3 lg:col-span-2">
           <p className="text-secondary font-semibold">x {products?.amount}</p>
         </div>
+       
       </div>
+      
 ))}
+ <div style={{display:'flex',flexDirection:'row',margin:5,height:"27%",justifyContent:"center"}}>
+        <label style={{margin:10}}>Type:</label>
 
+              <select
+                type="text"
+                name="Type"
+                style={{width:"10%"}}
+                onChange={(e)=>settype(e.target.value)}
+                value={Type}
+              >
+                <option value={"Cheque"}>Cheque</option>
+                <option value={"Advance"}>Advance</option>
+                
+              </select>
+            
+            <label style={{marginLeft:12,marginTop:10}} >Account No:</label>
+            <input
+              style={{width:"23%",marginLeft:20,marginRight:20}}
+              type="text"
+              label="Account No:"
+              name="AccountNo"
+              onChange={(e) => {
+                setAccount(e.target.value)}}
+              value={AccountNo}
+            />
+              
+            
+      <Button
+        onClick={async() => {
+
+          await productCartService.updateProductCart(product._id, {
+            paymentstatus: {Type:Type,AccountNo:AccountNo},
+          });
+          navigate("/dashboard/Accounts");
+        }}
+      >
+        Add Payment
+      </Button>
+    </div>
 
       <Backdrop
         title="Remove User!"
         show={showModal}
         onClick={() => setShowModal(false)}
       >
-        Are you sure you want to remove the product?
-        <div className="self-end mt-4">
+        Payment Method
+        <div className="self-end mt-4 flex">
+
+            
+            
           <Button
             type={"button"}
             onClick={() => {

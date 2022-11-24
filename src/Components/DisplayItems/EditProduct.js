@@ -20,10 +20,32 @@ const EditProduct = () => {
   );
 
   console.log(product);
+  const [fileBase64String, setFileBase64String] = useState("");
 
   const [profilePic, setProfilePic] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const encodeFileBase64 = (file) => {
+    var reader = new FileReader();
+    var array=[]
+    var arr=file
+    console.log("gfdo",file)
+    
+      console.log("dbasj")
+      if (file) {
+         reader.readAsDataURL(file);
+       reader.onload =() => {
+          var Base64 = reader.result;
 
+          setFileBase64String(Base64);
+        };
+        reader.onerror = (error) => {
+          console.log("error: ", error);
+        };
+      }
+    
+    console.log("arrya",fileBase64String)
+    
+  };
   const formik = useFormik({
     initialValues: {
       title: product?.title,
@@ -35,6 +57,7 @@ const EditProduct = () => {
     enableReinitialize: true,
     onSubmit: async (values) => {
       console.log(values);
+      values.productImage=fileBase64String
       await productService.updateProduct(productId, values);
       navigate("/dashboard/products");
     },
@@ -47,7 +70,7 @@ const EditProduct = () => {
           onSubmit={formik.handleSubmit}
           className="flex flex-col flex-wrap gap-6 px-6 lg:px-14"
         >
-          <h1 className="text-2xl">Edit User</h1>
+          <h1 className="text-2xl">Edit Product</h1>
           <section
             className={`flex flex-col flex-wrap gap-6 transition-opacity duration-500 ease-out
           ${isloading ? "opacity-50" : "opacity-100"}`}
@@ -69,7 +92,7 @@ const EditProduct = () => {
                   setProfilePic(e.target.files[0]);
                 }}
                 onUpload={() => {
-                  // uploadUserImage(profilePic, productId);
+                  encodeFileBase64(profilePic);
                 }}
               >
                 Upload

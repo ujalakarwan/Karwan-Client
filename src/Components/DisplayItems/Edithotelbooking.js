@@ -64,7 +64,7 @@ const EditProductCart = () => {
           onSubmit={formik.handleSubmit}
           className="flex flex-col flex-wrap gap-4 px-6 lg:px-14"
         >
-          <h1 className="text-2xl">Approve Product Cart</h1>
+          <h1 className="text-2xl">Approve Hotel Cart</h1>
 
           <div
             className={`flex flex-col gap-4 transition-opacity duration-500 ease-out
@@ -132,7 +132,7 @@ const EditProductCart = () => {
                     <p className=" text-[#404852]">Rooms</p>
                     <p className=" text-[#404852] self-end">:</p>
                       <p className="text-primary font-semibold opacity-70">
-                      {product?.Type+" Rs."+product?.Price+" From  "+product?.BookedCheckin+"  to  "+product?.BookedCheckout}
+                      {product?.Type+" Rs."+product?.Price+" From  "+(((new Date(product?.BookedCheckin)).getDate()+"/"+(new Date(product?.BookedCheckin)).getMonth()+"/"+(new Date(product?.BookedCheckin)).getFullYear()).toString())+"  to  "+(((new Date(product?.BookedCheckout)).getDate()+"/"+(new Date(product?.BookedCheckout)).getMonth()+"/"+(new Date(product?.BookedCheckout)).getFullYear()).toString())}
                     </p>
                     {/*<Button onClick={()=>{
                        const value={BookedCheckout:new Date(product.BookedCheckout)+1}
