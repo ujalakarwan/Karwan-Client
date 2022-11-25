@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import Button from "../Components/UI/Button"
 import ReactToPrint from 'react-to-print';
 import { useRef } from "react";
+import FormControl from "@mui/material/FormControl";
+
 import { useReactToPrint } from "react-to-print";
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 const Users = React.forwardRef(() => {
@@ -48,18 +50,26 @@ const Users = React.forwardRef(() => {
   const [autocompleteValue2, setAutocompleteValue2] = useState(null);
   const [autocompleteValue3, setAutocompleteValue3] = useState(null);
   const [autocompleteValue4, setAutocompleteValue4] = useState(null);
+  const [autocompleteValue5, setAutocompleteValue5] = useState(null);
+  const [fil,setfil]=useState('');
+  const [filt,setfilt]=useState('Name');
+  const [FilteredReports,setFilteredReports]=useState([])
+  const [FilteredReport,setFilteredReport]=useState([])
 
   const [filteredUsers,setFilteredUsers]=useState([])
   const [selectedUser,setSelectedUser]=useState([])
   const [filtersarr,setfarr]=useState([])
   const [Rows, setRows] = useState([]);
   
-  console.log(allUsers);
+  useEffect(() => {
+   
+
+    
+  },[allUsers]);
   useEffect(() => {
     let selectedUsers = [];
     allUsers?.forEach((student) => {
 
-      console.log("sada",student)
         let filteredvisas =visa?.filter(
           (synopsis) => synopsis?.fullName === student?.userName
         );
@@ -80,11 +90,12 @@ const Users = React.forwardRef(() => {
             visaType: filteredvisas[0].visaType,
           }),
           ...(filteredorder?.length > 0 && {
-            orderstatus: filteredorder[0].status
+            orderstatus: filteredorder[0].status,
+            orderpaymentstatus:filteredorder[0].paymentstatus
           }),
           
           ...(filteredhotels?.length > 0 && {
-            hotelstatus: filteredhotels[0].status
+            hotelstatus: filteredhotels[0].status,
           }),
           
           ...(filteredtransports?.length > 0 && {
@@ -93,9 +104,10 @@ const Users = React.forwardRef(() => {
         });
       
     });
-    console.log("sekected flher",selectedUsers)
     setSelectedUser(selectedUsers);
     setFilteredUsers(selectedUsers);
+    setFilteredReport(selectedUsers);
+
     
   },[allUsers]);
   
@@ -104,7 +116,7 @@ const Users = React.forwardRef(() => {
     if(selectedStudent) {
       pusharray(selectedUser,selectedStudent,"Order")
     } else {
-      console.log("das",selectedUser)
+      setfil("")
 
       filterarray(selectedUser,'Order')
     }
@@ -114,7 +126,7 @@ const Users = React.forwardRef(() => {
     if(selectedStudent) {
       pusharray(selectedUser,selectedStudent,"Type")
     } else {
-      console.log("das",selectedUser)
+      setfil("")
 
       filterarray(selectedUser,'Type')
     }
@@ -125,9 +137,19 @@ const Users = React.forwardRef(() => {
     if(selectedStudent) {
       pusharray(selectedUser,selectedStudent,"Hotel")
     } else {
-      console.log("das",selectedUser)
+      setfil("")
 
       filterarray(selectedUser,'Hotel')
+    }
+  };
+  const handlepayment= (selectedStudent) => {
+    var a;
+    if(selectedStudent) {
+      pusharray(selectedUser,selectedStudent,"Payment")
+    } else {
+      setfil("")
+
+      filterarray(selectedUser,'Payment')
     }
   };
   const handletransport= (selectedStudent) => {
@@ -135,35 +157,27 @@ const Users = React.forwardRef(() => {
     if(selectedStudent) {
       pusharray(selectedUser,selectedStudent,"Transport")
     } else {
-      console.log("das",selectedUser)
-
+      setfil("")
       filterarray(selectedUser,'Transport')
     }
   };
   const filterarray=(arr,type)=>{
     var array=filtersarr
-    console.log("safolters",filtersarr)
     array=filtersarr.filter((item)=>item.type!=type)
     setfarr(array)
-    console.log("sters",arr)
 
     showdata(arr,array)
 
   }
 
   const pusharray=(arr,item,type)=>{
-    console.log("pusharray",arr)
-    console.log("pusharrayitem",item)
-    console.log("pusharraytype",type)
-    console.log("filterarr",filtersarr)
+    
     var array=filtersarr
     array=filtersarr?.filter((item)=>item.type!=type)
-    console.log("arraty",array)
     if(array.length==0){
       let b={type:type,filter:item}
       array.push(b)
       setfarr(array)
-      console.log("aarray",array)
       showdata(arr,array);
     }
     else{
@@ -175,11 +189,9 @@ const Users = React.forwardRef(() => {
   }
   const showdata=(arr,b)=>{
     var a=arr
-    console.log("a",b)
     b.map((item)=>{
       if(item.type=="Order"){
         	a=a.filter((report) => report?.orderstatus==item.filter)
-          console.log("answer",a)
       }
       else if(item.type=="Type"){
         a=a.filter((report) => report?.visaType==item.filter)
@@ -187,13 +199,17 @@ const Users = React.forwardRef(() => {
       else if(item.type=="Hotel"){
         a=a.filter((report) =>report?.hotelstatus==item.filter)
       }
+      else if(item.type=="Payment"){
+        a=a.filter((report) =>report?.orderpaymentstatus==item.filter)
+      }
       else if(item.type=="Transport"){
         a=a.filter((report) =>report?.transportstatus==item.filter)
       }
     })
     
-              console.log("aaa",a)
               setFilteredUsers(a)
+              setFilteredReports(a)
+
 
   }
   const defaultverification={
@@ -204,10 +220,92 @@ const Users = React.forwardRef(() => {
   }
   const defaultType={
       
-    options:["Umrah","Hajj"]
+    options:["umrah","hajj"]
 
  // getOptionLabel:,
   }
+  const defaultPayment={
+      
+    options:["Cheque","Advance"]
+
+ // getOptionLabel:,
+  }
+  const defaultSearches={
+      
+    options:["Name","UserId","Email","PhoneNo"]
+
+ // getOptionLabel:,
+  }
+  const searchtext = (event) =>{
+    setfil(event.target.value);
+}
+  
+useEffect(() => {
+  setFilteredReport(filterbySearch(selectedUser, fil,filt));
+  
+},[fil
+]);
+const filterbySearch=(data,fil,filt)=>{
+  console.log("Data",data)
+  console.log("fil",fil)
+  console.log("filt",filt)
+  if(filt=="Name"){
+    if(fil==""){
+      var row=[]
+      setFilteredUsers(data);
+      return data
+    }
+    var a = data.filter(item =>
+           item.user_id.userName.toString().toLowerCase().startsWith(fil.toString().toLowerCase())     
+          )
+                 setFilteredUsers(a);
+                 return a;
+
+  }
+  if(filt=="UserId"){
+    if(fil==""){
+      var row=[]
+      setFilteredUsers(data);
+      return data
+    }
+    var a = data.filter(item =>
+           item.user_id._id.toString().startsWith(fil.toString())     
+          )
+          var row=[]
+                 setFilteredUsers(a);
+                 return a;
+
+  }
+  if(filt=="Email"){
+    if(fil==""){
+      var row=[]
+      setFilteredUsers(data);
+      return data
+    }
+    var a = data.filter(item =>
+           item.user_id.email.toString().toLowerCase().startsWith(fil.toString().toLowerCase())     
+          )
+          var row=[]
+                 setFilteredUsers(a);
+                 return a;
+
+  }
+  if(filt=="PhoneNo"){
+    if(fil==""){
+      var row=[]
+      setFilteredUsers(data);
+      return data
+    }
+    var a = data.filter(item =>
+           item.user_id.contact.toString().startsWith(fil.toString())     
+          )
+          var row=[]
+                 setFilteredUsers(a);
+                 return a;
+
+  }
+  
+ }
   return (
     <Card>
       <div className="w-[90%] max-w-5xl h-full mx-auto">
@@ -218,8 +316,39 @@ const Users = React.forwardRef(() => {
         {/* Table */}
         {/* Header */}
         <div style={{display:'flex',flexDirection:'row', justifyContent:'space-between'}}>
+        <FormControl fullWidth color="secondary" >
+          <input id="demo-simple-select-label"  placeholder="Search"  value={fil}
+              onChange={searchtext.bind(this)}   style={{borderRadius:3,marginRight:8,borderColor:"black",borderWidth:2,marginBottom:10,padding:13.5,color:'grey',fontFamily:'calibri',fontSize:16}}></input>
+          
+</FormControl>
+
+<Box sx={{ minWidth: 200, marginBottom: "15px" }}>
+        <Box sx={{ mb: 4 }}>
+          <Autocomplete
+            {...defaultSearches}
+            id="controlled-demo"
+            value={filt}
+            onChange={(value, newValue) => {
+              let verified = newValue;
+              setfilt(newValue);
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Search By"
+                variant="outlined"
+                color="secondary"
+              />
+            )}
+          />
+        </Box>
+      </Box> 
+        </div>
+        
       
-        <Box sx={{ minWidth: 250, marginBottom: "15px" }}>
+        <div style={{display:'flex',flexDirection:'row', justifyContent:'space-between'}}>
+       
+        <Box sx={{ minWidth: 200, marginBottom: "15px" }}>
         <Box sx={{ mb: 4 }}>
           <Autocomplete
             {...defaultType}
@@ -242,7 +371,7 @@ const Users = React.forwardRef(() => {
         </Box>
       </Box> 
 
-      <Box sx={{ minWidth: 250, marginBottom: "15px" }}>
+      <Box sx={{ minWidth: 200, marginBottom: "15px" }}>
         <Box sx={{ mb: 4 }}>
           <Autocomplete
             {...defaultverification}
@@ -264,7 +393,7 @@ const Users = React.forwardRef(() => {
           />
         </Box>
       </Box> 
-      <Box sx={{ minWidth: 250, marginBottom: "15px" }}>
+      <Box sx={{ minWidth: 200, marginBottom: "15px" }}>
         <Box sx={{ mb: 4 }}>
           <Autocomplete
             {...defaultverification}
@@ -286,7 +415,7 @@ const Users = React.forwardRef(() => {
           />
         </Box>
       </Box> 
-      <Box sx={{ minWidth: 250, marginBottom: "15px" }}>
+      <Box sx={{ minWidth: 200, marginBottom: "15px" }}>
         <Box sx={{ mb: 4 }}>
           <Autocomplete
             {...defaultverification}
@@ -308,7 +437,28 @@ const Users = React.forwardRef(() => {
           />
         </Box>
       </Box> 
-      
+      <Box sx={{ minWidth: 200, marginBottom: "15px" }}>
+        <Box sx={{ mb: 4 }}>
+          <Autocomplete
+            {...defaultPayment}
+            id="controlled-demo"
+            value={autocompleteValue4}
+            onChange={(value, newValue) => {
+              let verified = newValue;
+              setAutocompleteValue5(newValue);
+              handlepayment(verified);
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Order Payment Status"
+                variant="outlined"
+                color="secondary"
+              />
+            )}
+          />
+        </Box>
+      </Box> 
       </div>
         <div className="flex flex-col px-0" ref={el => (componentRef = el)}>
           <div className="flex items-center justify-between">
