@@ -53,7 +53,7 @@ const AllProductsItems = ({ product, productCart, setProductCart }) => {
       </div>
       
 ))}
- <div style={{display:'flex',flexDirection:'row',margin:5,height:"27%",justifyContent:"center"}}>
+ <div style={{display:'flex',flexDirection:'row',margin:5,height:"27%",justifyContent:"center"}} className="print:invisible">
         <label style={{margin:10}}>Type:</label>
 
               <select

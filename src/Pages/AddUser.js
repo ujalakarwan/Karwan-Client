@@ -7,14 +7,24 @@ import Button from "../Components/UI/Button";
 import Backdrop from "../Components/UI/BackdropModal";
 import InputFile from "../Components/UI/InputFile";
 import userService from "../api/users.api";
+import * as yup from "yup";
+import TextField from "@mui/material/TextField";
 
 const AddUser = () => {
   const navigate = useNavigate();
-
+  const [error,seterror]=useState()
   const [showModal, setShowModal] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
   const [fileBase64String, setFileBase64String] = useState("");
+  const validationSchema = yup.object({
+    email: yup.string("Enter your email")
+       .email("Enter a valid email")
+      .required("Email is required"),
+    contact:yup.number("Enter Valid Number")
+    .required("A phone number is required")
+  });
 
+  
   const encodeFileBase64 = (file) => {
     var reader = new FileReader();
     if (file) {
@@ -40,6 +50,7 @@ const AddUser = () => {
       password: "",
     },
     enableReinitialize: true,
+    validationSchema: validationSchema,
 
     onSubmit: async (values) => {
       console.log(values);
@@ -89,46 +100,60 @@ const AddUser = () => {
                 Upload
               </InputFile>
             </div>
-            <Input
-              width="full"
-              type="text"
-              name="userName"
+            
+            <TextField
+                margin="normal"
+                fullWidth
+                id="userName"
+                name="userName"
               label="Name:"
               onChange={formik.handleChange}
               value={formik.values.userName}
-            />
-            <Input
-              width="full"
-              type="text"
-              label="E-mail:"
-              name="email"
-              onChange={formik.handleChange}
-              value={formik.values.email}
-            />
-            <Input
-              width="full"
-              type="text"
-              label="Contact:"
-              name="contact"
-              onChange={formik.handleChange}
-              value={formik.values.contact}
-            />
-            <Input
-              width="full"
-              type="text"
-              label="Address"
+              />
+            <TextField
+                margin="normal"
+                fullWidth
+                id="email"
+                name="email"
+                label="Enter your email address"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
+              />
+
+              <TextField
+                margin="normal"
+                fullWidth
+                id="contact"
+                label="Contact:"
+                name="contact"
+                onChange={formik.handleChange}
+                value={formik.values.contact}
+                error={formik.touched.contact && Boolean(formik.errors.contact)}
+                helperText={formik.touched.contact && formik.errors.contact}
+              />
+            
+            <TextField
+                margin="normal"
+                fullWidth
+                id="Address"
+                label="Address"
               name="address"
               onChange={formik.handleChange}
               value={formik.values.address}
-            />
-            <Input
-              width="full"
-              type="text"
-              label="Password"
+              />
+            <TextField
+                margin="normal"
+                fullWidth
+                id="Password"
+                label="Password"
               name="password"
               onChange={formik.handleChange}
               value={formik.values.password}
-            />
+              />
+            
+           
           </section>
 
           <div className="flex justify-end gap-8 mt-4">

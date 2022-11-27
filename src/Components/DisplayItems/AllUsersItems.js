@@ -25,7 +25,22 @@ const AllUsersItems = ({ user, check, setCheck }) => {
               <div className="h-14 w-14 bg-slate-300 rounded-full" />
             )}
           </div>
-          <p className="flex items-center">{user?.userName}</p>
+          <div>
+              <p >{user?.userName}</p>
+
+              <div className="flex" >
+             
+              <p className="text-sm font-normal opacity-70">
+                Number:
+              </p>
+                <p className="text-sm font-normal opacity-70">
+                {user?.contact}
+              </p>
+              
+            </div>
+            </div>
+
+
         </div>
         <div className="col-span-2 lg:col-span-1">
           <Button

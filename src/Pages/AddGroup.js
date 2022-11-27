@@ -72,21 +72,27 @@ const AddGroup = () => {
                 <Button
                   type={"button"}
                   onClick={() => {
-                    setIsMember(false);
-
-                    let preMember = group.filter(
-                      (member) => member.email === formik.values.memberEmail
-                    );
-                    console.log(preMember.length);
-                    if (preMember.length === 0) {
-                      let filteredUser = users.filter(
-                        (user) => user.email === formik.values.memberEmail
-                      );
-                      setGroup([...group, filteredUser[0]]);
-                      console.log(group);
-                    } else {
-                      setIsMember(true);
+                    if(!formik.values.memberEmail.includes("@") || !formik.values.memberEmail.includes(".com")){
+                      alert("Enter Valid Email")
                     }
+                    else{
+                      setIsMember(false);
+
+                      let preMember = group?.filter(
+                        (member) => member?.email === formik.values.memberEmail
+                      );
+                      console.log(preMember.length);
+                      if (preMember.length === 0) {
+                        let filteredUser = users.filter(
+                          (user) => user?.email === formik.values.memberEmail
+                        );
+                        setGroup([...group, filteredUser[0]]);
+                        console.log(group);
+                      } else {
+                        setIsMember(true);
+                      }
+                    }
+                    
                   }}
                 >
                   <div className="text-base p-1">Add User</div>
@@ -101,7 +107,7 @@ const AddGroup = () => {
                 {group &&
                   group?.map((member) => (
                     <AllMembersItems
-                      key={member._id}
+                      key={member?._id}
                       groupMember={member}
                       group={group}
                       setGroup={setGroup}

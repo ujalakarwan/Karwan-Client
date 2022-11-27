@@ -1,17 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../Components/UI/Card";
 import Chart from "../Components/UI/Chart";
+import useFetch from "../hooks/useFetch";
+import Spinner from "../Components/UI/Spinner";
 
-const tileContent = [
-  { name: "Groups", number: 40 },
-  { name: "Transactions", number: 360 },
-  { name: "Users", number: 160 },
-  { name: "Requests", number: 204 },
-];
+
 
 const Dashboard = () => {
+  const [check, setCheck] = useState(false);
+
+  const { data: users, isloading } = useFetch(
+    "/get-users",
+    check
+  );
+  const { data: visas, isloading1 } = useFetch(
+    "/get-visa",
+    check
+  );
+  const { data: books, isloading2 } = useFetch(
+    "/get-books",
+    check
+  );
+  const { data: videos, isloading3 } = useFetch(
+    "/get-videos",
+    check
+  );
+  const { data: products, isloading4 } = useFetch(
+    "/get-products",
+    check
+  );
+  const { data: orders, isloading5 } = useFetch(
+    "/get-productCarts",
+    check
+  );
+  const { data: transportbookings, isloading6 } = useFetch(
+    "/get-transportbookings",
+    check
+  );
+  const { data: transports, isloading7 } = useFetch(
+    "/get-transports",
+    check
+  );
+  const { data: hotelbookings, isloading8 } = useFetch(
+    "/get-hotelbookings",
+    check
+  );
+  const { data: hotels, isloading9 } = useFetch(
+    "/get-hotels",
+    check
+  );
+ 
+  console.log("users",users)
+  console.log("visas",visas)
+  console.log("books",books)
+  console.log("videos",videos)
+  console.log("products",products)
+  console.log("transports",transports)
+  console.log("hotels",hotels)
+  console.log("transportbookings",transportbookings)
+  console.log("hotelbookings",hotelbookings)
+    
+
+
   const date = new Date();
   const currentDate = `${date.getDate()} / ${date.getMonth()} / ${date.getFullYear()}`;
+  const hajj=visas?.filter((item)=>item.visaType=="hajj")
+  const umrah=visas?.filter((item)=>item.visaType=="umrah")
   return (
     <Card>
       <div className="w-[90%] max-w-5xl h-full mx-auto">
@@ -21,21 +75,138 @@ const Dashboard = () => {
         </header>
         <main className="mt-8 flex flex-col gap-4">
           <section>
-            <div className="grid grid-cols-4 gap-4">
-              {tileContent.map((item, idx) => (
+            <div className="grid grid-cols-3 gap-4">
+              
                 <div
-                  key={idx}
                   className="flex flex-col gap-6 items-center py-10 lg:py-6 col-span-4 sm:col-span-2 lg:col-span-1 rounded-xl border-2 border-gray-500 text-center
                   hover:border-primary hover:ring-1 hover:ring-primary 
                   transition ease-out duration-300"
                 >
-                  <p className="text-2xl ">{item.name}</p>
-                  <p className="text-2xl">{item.number}</p>
+                  <p className="text-2xl ">Total Users</p>
+                  {isloading ? (
+            <div className="z-30 m-auto mt-20">
+              <Spinner />
+            </div>
+          ) : 
+                  <p className="text-2xl">{users?.length}</p>}
                 </div>
-              ))}
+                <div
+                  className="flex flex-col gap-6 items-center py-10 lg:py-6 col-span-4 sm:col-span-2 lg:col-span-1 rounded-xl border-2 border-gray-500 text-center
+                  hover:border-primary hover:ring-1 hover:ring-primary 
+                  transition ease-out duration-300"
+                >
+                  <p className="text-2xl ">Total Visas</p>
+                  {isloading ? (
+            <div className="z-30 m-auto mt-20">
+              <Spinner />
+            </div>
+          ) : 
+          <div>
+            
+                  <p className="text-2xl">{visas?.length}</p>
+                  <div style={{display:'flex',flexDirection:'row',marginTop:20,color:'darkgreen'}}>
+                  <p className="text-xl">Hajj Applicants: </p>
+                  <p className="text-xl">{hajj?.length}</p>
+                  </div>
+                  <div style={{display:'flex',flexDirection:'row',color:'darkgreen'}}>
+                  <p className="text-xl">Umrah Applicants: </p>
+                  <p className="text-xl">{" "+umrah?.length}</p>
+                  </div>
+                  </div>
+                  }
+            </div>
+            <div
+                  className="flex flex-col gap-6 items-center py-10 lg:py-6 col-span-4 sm:col-span-2 lg:col-span-1 rounded-xl border-2 border-gray-500 text-center
+                  hover:border-primary hover:ring-1 hover:ring-primary 
+                  transition ease-out duration-300"
+                >
+                  <p className="text-2xl ">Total items</p>
+                  {isloading ? (
+            <div className="z-30 m-auto mt-20">
+              <Spinner />
+            </div>
+          ) : 
+          <div>
+            
+                  <div style={{display:'flex',flexDirection:'row',color:'darkgreen'}}>
+                  <p className="text-xl">Books: </p>
+                  <p className="text-xl">{books?.length}</p>
+                  </div>
+                  <div style={{display:'flex',flexDirection:'row',color:'darkgreen'}}>
+                  <p className="text-xl">Videos: </p>
+                  <p className="text-xl">{" "+videos?.length}</p>
+                  </div>
+                  </div>
+                  }
+            </div>
+            <div
+                  className="flex flex-col gap-6 items-center py-10 lg:py-6 col-span-4 sm:col-span-2 lg:col-span-1 rounded-xl border-2 border-gray-500 text-center
+                  hover:border-primary hover:ring-1 hover:ring-primary 
+                  transition ease-out duration-300"
+                >
+                  <p className="text-2xl ">Total Products</p>
+                  {isloading ? (
+            <div className="z-30 m-auto mt-20">
+              <Spinner />
+            </div>
+          ) : 
+          <div>
+            
+                  <p className="text-2xl">{products?.length}</p>
+                  <div style={{display:'flex',flexDirection:'row',marginTop:20,color:'darkgreen',marginTop:20,color:'darkgreen'}}>
+                  <p className="text-xl">Orders: </p>
+                  <p className="text-xl">{" "+orders?.length}</p>
+                  </div>
+                  </div>
+                  }
+            </div>
+            <div
+                  className="flex flex-col gap-6 items-center py-10 lg:py-6 col-span-4 sm:col-span-2 lg:col-span-1 rounded-xl border-2 border-gray-500 text-center
+                  hover:border-primary hover:ring-1 hover:ring-primary 
+                  transition ease-out duration-300"
+                >
+                  <p className="text-2xl ">Total Hotel</p>
+                  {isloading ? (
+            <div className="z-30 m-auto mt-20">
+              <Spinner />
+            </div>
+          ) : 
+          <div>
+            
+                  <p className="text-2xl">{hotels?.length}</p>
+                  <div style={{display:'flex',flexDirection:'row',marginTop:20,color:'darkgreen'}}>
+                  <p className="text-xl">Hotel Bookings: </p>
+                  <p className="text-xl">{" "+hotelbookings?.length}</p>
+                  </div>
+                  </div>
+                  }
+            </div>
+            <div
+                  className="flex flex-col gap-6 items-center py-10 lg:py-6 col-span-4 sm:col-span-2 lg:col-span-1 rounded-xl border-2 border-gray-500 text-center
+                  hover:border-primary hover:ring-1 hover:ring-primary 
+                  transition ease-out duration-300"
+                >
+                  <p className="text-2xl ">Total Transport</p>
+                  {isloading ? (
+            <div className="z-30 m-auto mt-20">
+              <Spinner />
+            </div>
+          ) : 
+          <div>
+            
+                  <p className="text-2xl">{transports?.length}</p>
+                  <div style={{display:'flex',flexDirection:'row',marginTop:20,color:'darkgreen'}}>
+                  <p className="text-xl">Transport Bookings: </p>
+                  <p className="text-xl">{" "+transportbookings?.length}</p>
+                  </div>
+                  </div>
+                  }
+            </div>
+
+
             </div>
           </section>
-          <section>
+          {/*<section>
             <div
               className="grid grid-cols-8 rounded-xl border-2 border-gray-500 hover:border-primary hover:ring-1 hover:ring-primary
                   transition ease-out duration-300"
@@ -56,7 +227,7 @@ const Dashboard = () => {
                 <p>60</p>
               </div>
             </div>
-          </section>
+              </section>*/}
         </main>
       </div>
     </Card>

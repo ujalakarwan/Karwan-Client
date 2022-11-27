@@ -114,7 +114,7 @@ const EditProduct = () => {
            <label className="text-secondary font-semibold">Hotel Bookings:</label>
            {hotelbooking &&
                   hotelbooking?.map((products) =>(
-                    products?.user_id._id==productId?
+                    products?.user_id?._id==productId?
                     (
                             <AllBookings
                             key={products._id}

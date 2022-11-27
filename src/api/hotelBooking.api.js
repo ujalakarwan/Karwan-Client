@@ -1,6 +1,8 @@
 import API from "./baseURL";
 
 const addProductCart = async (formData) => {
+  console.log("formdata",formData)
+
   try {
     const { data } = await API.post("/add-hotelbooking", formData);
     console.log(data);

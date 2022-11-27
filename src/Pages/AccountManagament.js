@@ -15,12 +15,13 @@ import FormControl from "@mui/material/FormControl";
 
 import { useReactToPrint } from "react-to-print";
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
+
 const Users = React.forwardRef(() => {
   const [check, setCheck] = useState(false);
   const [check1, setCheck1] = useState(false);
   const [check2, setCheck2] = useState(false);
   let navigate = useNavigate();
-
+  const [print,setprint]=useState(false)
   const [check3, setCheck3] = useState(false);
   const [flag,setflag]=useState(false)
   const { data: visa, isloading4 } = useFetch(
@@ -51,6 +52,8 @@ const Users = React.forwardRef(() => {
   const [autocompleteValue3, setAutocompleteValue3] = useState(null);
   const [autocompleteValue4, setAutocompleteValue4] = useState(null);
   const [autocompleteValue5, setAutocompleteValue5] = useState(null);
+  const [autocompleteValue6, setAutocompleteValue6] = useState(null);
+  const [autocompleteValue7, setAutocompleteValue7] = useState(null);
   const [fil,setfil]=useState('');
   const [filt,setfilt]=useState('Name');
   const [FilteredReports,setFilteredReports]=useState([])
@@ -61,9 +64,11 @@ const Users = React.forwardRef(() => {
   const [filtersarr,setfarr]=useState([])
   const [Rows, setRows] = useState([]);
   
+  
   useEffect(() => {
-   
-
+    
+  },[print]);  
+  useEffect(() => {
     
   },[allUsers]);
   useEffect(() => {
@@ -88,6 +93,7 @@ const Users = React.forwardRef(() => {
           user_id: student,
           ...(filteredvisas?.length > 0 && {
             visaType: filteredvisas[0].visaType,
+            visastatus:filteredvisas[0].visaStatus
           }),
           ...(filteredorder?.length > 0 && {
             orderstatus: filteredorder[0].status,
@@ -148,7 +154,6 @@ const Users = React.forwardRef(() => {
       pusharray(selectedUser,selectedStudent,"Payment")
     } else {
       setfil("")
-
       filterarray(selectedUser,'Payment')
     }
   };
@@ -159,6 +164,24 @@ const Users = React.forwardRef(() => {
     } else {
       setfil("")
       filterarray(selectedUser,'Transport')
+    }
+  };
+  const handleregisteration= (selectedStudent) => {
+    var a;
+    if(selectedStudent) {
+      pusharray(selectedUser,selectedStudent,"Registeration")
+    } else {
+      setfil("")
+      filterarray(selectedUser,'Registeration')
+    }
+  };
+  const handlevisastatus= (selectedStudent) => {
+    var a;
+    if(selectedStudent) {
+      pusharray(selectedUser,selectedStudent,"visastatus")
+    } else {
+      setfil("")
+      filterarray(selectedUser,'visastatus')
     }
   };
   const filterarray=(arr,type)=>{
@@ -205,6 +228,12 @@ const Users = React.forwardRef(() => {
       else if(item.type=="Transport"){
         a=a.filter((report) =>report?.transportstatus==item.filter)
       }
+      else if(item.type=="Registeration"){
+        a=a.filter((report) =>report?.user_id?.RegisterationDate==item.filter)
+      }
+      else if(item.type=="visastatus"){
+        a=a.filter((report) =>report?.visastatus==item.filter)
+      }
     })
     
               setFilteredUsers(a)
@@ -233,6 +262,18 @@ const Users = React.forwardRef(() => {
   const defaultSearches={
       
     options:["Name","UserId","Email","PhoneNo"]
+
+ // getOptionLabel:,
+  }
+  const defaultRegisteration={
+      
+    options:["2022","2023","2024","2025","2026","2027","2028","2029","2030"]
+
+ // getOptionLabel:,
+  }
+  const defaultvisaStatus={
+      
+    options:["Approved","Pending","Extended"]
 
  // getOptionLabel:,
   }
@@ -348,7 +389,7 @@ const filterbySearch=(data,fil,filt)=>{
       
         <div style={{display:'flex',flexDirection:'row', justifyContent:'space-between'}}>
        
-        <Box sx={{ minWidth: 200, marginBottom: "15px" }}>
+        <Box sx={{ minWidth: 150, marginBottom: "15px" }}>
         <Box sx={{ mb: 4 }}>
           <Autocomplete
             {...defaultType}
@@ -371,7 +412,7 @@ const filterbySearch=(data,fil,filt)=>{
         </Box>
       </Box> 
 
-      <Box sx={{ minWidth: 200, marginBottom: "15px" }}>
+      <Box sx={{ minWidth: 150, marginBottom: "15px" }}>
         <Box sx={{ mb: 4 }}>
           <Autocomplete
             {...defaultverification}
@@ -393,7 +434,7 @@ const filterbySearch=(data,fil,filt)=>{
           />
         </Box>
       </Box> 
-      <Box sx={{ minWidth: 200, marginBottom: "15px" }}>
+      <Box sx={{ minWidth: 150, marginBottom: "15px" }}>
         <Box sx={{ mb: 4 }}>
           <Autocomplete
             {...defaultverification}
@@ -415,7 +456,7 @@ const filterbySearch=(data,fil,filt)=>{
           />
         </Box>
       </Box> 
-      <Box sx={{ minWidth: 200, marginBottom: "15px" }}>
+      <Box sx={{ minWidth: 150, marginBottom: "15px" }}>
         <Box sx={{ mb: 4 }}>
           <Autocomplete
             {...defaultverification}
@@ -437,7 +478,7 @@ const filterbySearch=(data,fil,filt)=>{
           />
         </Box>
       </Box> 
-      <Box sx={{ minWidth: 200, marginBottom: "15px" }}>
+      <Box sx={{ minWidth: 150, marginBottom: "15px" }}>
         <Box sx={{ mb: 4 }}>
           <Autocomplete
             {...defaultPayment}
@@ -459,8 +500,53 @@ const filterbySearch=(data,fil,filt)=>{
           />
         </Box>
       </Box> 
+      <Box sx={{ minWidth: 150, marginBottom: "15px" }}>
+        <Box sx={{ mb: 4 }}>
+          <Autocomplete
+            {...defaultRegisteration}
+            id="controlled-demo"
+            value={autocompleteValue6}
+            onChange={(value, newValue) => {
+              let verified = newValue;
+              setAutocompleteValue6(newValue);
+              handleregisteration(verified);
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Registeration Year"
+                variant="outlined"
+                color="secondary"
+              />
+            )}
+          />
+        </Box>
+      </Box> 
+      <Box sx={{ minWidth: 150, marginBottom: "15px" }}>
+        <Box sx={{ mb: 4 }}>
+          <Autocomplete
+            {...defaultvisaStatus}
+            id="controlled-demo"
+            value={autocompleteValue7}
+            onChange={(value, newValue) => {
+              let verified = newValue;
+              setAutocompleteValue7(newValue);
+              handlevisastatus(verified);
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Visa Status"
+                variant="outlined"
+                color="secondary"
+              />
+            )}
+          />
+        </Box>
+      </Box> 
       </div>
-        <div className="flex flex-col px-0" ref={el => (componentRef = el)}>
+      
+        <div className="flex flex-col px-2" ref={el => (componentRef = el)}>
           <div className="flex items-center justify-between">
             <p className="text-lg font-bold text-secondary">Users</p>
             <svg
@@ -476,7 +562,7 @@ const filterbySearch=(data,fil,filt)=>{
           <hr className="max-w-full" />
           {/* Body */}
 
-          {isloading ? (
+          {isloading3 ? (
             <div className="z-30 m-auto mt-20">
               <Spinner />
             </div>
@@ -504,7 +590,8 @@ const filterbySearch=(data,fil,filt)=>{
           </div>
           <p className="flex items-center">{item?.user_id?.userName}</p>
         </div>
-        <div className="col-span-2 lg:col-span-1">
+       
+        <div className="col-span-2 lg:col-span-1 no-print print:invisible">
           <Button
             onClick={() => {
               navigate(`/dashboard/Accountdetails/${item?.user_id?._id}`);

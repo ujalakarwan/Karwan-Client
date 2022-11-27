@@ -33,13 +33,13 @@ const AllProductsItems = ({ product, productCart, setProductCart }) => {
 
         <div className="col-span lg:col-span">
           <p className=" text-secondary font-semibold">
-          {(((new Date(products?.BookedCheckin)).getDate()+"/"+(new Date(products?.BookedCheckin)).getMonth()+"/"+(new Date(products?.BookedCheckin)).getFullYear()).toString())}
+          {(((new Date(products?.BookedCheckin)).getDate()+"/"+((new Date(products?.BookedCheckin)).getMonth()+1)+"/"+(new Date(products?.BookedCheckin)).getFullYear()).toString())}
           </p>
         </div>
         <div>-</div>
         <div className="col-span lg:col-span-1" >
           <p className="text-secondary font-semibold">
-            {((new Date(products?.BookedCheckout)).getDate()+"/"+(new Date(products?.BookedCheckout)).getMonth()+"/"+(new Date(products?.BookedCheckout)).getFullYear()).toString()}</p>
+            {((new Date(products?.BookedCheckout)).getDate()+"/"+((new Date(products?.BookedCheckout)).getMonth()+1)+"/"+(new Date(products?.BookedCheckout)).getFullYear()).toString()}</p>
         </div>
       </div>
                               ))}
@@ -54,7 +54,7 @@ const AllProductsItems = ({ product, productCart, setProductCart }) => {
             </div>
           </div>
 
-          <div style={{display:'flex',flexDirection:'row',margin:5,height:"27%",justifyContent:"center"}}>
+          <div style={{display:'flex',flexDirection:'row',margin:5,height:"27%",justifyContent:"center"}} className="print:invisible">
         <label style={{margin:10}}>Type:</label>
 
               <select

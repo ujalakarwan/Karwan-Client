@@ -10,7 +10,7 @@ import Button from "../Components/UI/Button";
 import { setUser } from "../redux/userSlice";
 import logo from "../Assets/Images/logo.png";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
-
+import useFetchDoc from "../hooks/useFetchDoc";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -39,12 +39,25 @@ const Login = () => {
     await sendPasswordResetEmail(auth, formik.values.email);
     console.log("Password reset email sent")
   }
+  const { docData: users } = useFetchDoc(
+    `/get-users`
+  );
+
   const login = async (email, password) => {
     try {
-      const user = await signInWithEmailAndPassword(auth, email, password);
-      console.log(user);
+
+      //const user = await signInWithEmailAndPassword(auth, email, password);
+      var user=users.find((item)=>item.email==email && item.password==password)
+     console.log(user);
+     if(user){
       localStorage.setItem("isLoggedIn", true);
-      navigate("/dashboard/users");
+      localStorage.setItem("user", user._id);
+      navigate("/dashboard/Stats");
+     }else{
+      alert("Account Doesnot Exist")
+     }
+      console.log("ssa",users)
+      
     } catch (error) {
       console.log(error.message);
       alert("invalid");
@@ -96,9 +109,9 @@ const Login = () => {
               ) : null}
             </div>
           </div>
-          <div onClick={triggerResetEmail}>
+         {/*} <div onClick={triggerResetEmail}>
           <p className="text-sm">Forgot Password?</p>
-          </div>
+              </div>*/}
           <Button type={"submit"}>
             <p className="text-lg">Login</p>
           </Button>

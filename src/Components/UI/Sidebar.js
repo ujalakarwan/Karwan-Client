@@ -7,6 +7,9 @@ import { useSelector } from "react-redux";
 import { auth } from "../../api/firebase-config";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import logo from "../../Assets/Images/logo.png";
+import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
+import { SvgIcon } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Sidebar = (props) => {
   const navigate = useNavigate();
@@ -45,12 +48,16 @@ const Sidebar = (props) => {
     { key: "18", name: "Orders", route: "/dashboard/productCarts" },
     { key: "19", name: "Hotel Bookings", route: "/dashboard/hotelbookings" },
     { key: "20", name: "Transport Bookings", route: "/dashboard/transportbookings" },
-    { key: "21", name: "Books", route: "/dashboard/books" },
-    { key: "22", name: "Book Requests", route: "/dashboard/book-requests" },
-    { key: "23", name: "Manage Accounts", route: "/dashboard/Accounts" },
-    { key: "24", name: "Wishlist", route: "/dashboard/wishlists" },
+    { key: "21", name: "Add Book", route: "/dashboard/add-book" },
 
-    { key: "25", name: "Logout", route: "/", logout: true },
+    { key: "22", name: "Books", route: "/dashboard/books" },
+    { key: "23", name: "Book Requests", route: "/dashboard/book-requests" },
+    { key: "24", name: "Manage Accounts", route: "/dashboard/Accounts" },
+    { key: "25", name: "Wishlist", route: "/dashboard/wishlists" },
+    { key: "26", name: "Book Hotel", route: "/dashboard/BookHotel" },
+    { key: "27", name: "Book Transport", route: "/dashboard/BookTransport" },
+
+    { key: "28", name: "Logout", route: "/", logout: true },
   ];
 
   return (
@@ -94,6 +101,8 @@ const Sidebar = (props) => {
           {sidebarList.map((item, index) => {
             return (
               <div key={item.key} className="max-w-xs">
+{/*}                <svg data-testid="DeleteIcon"></svg>*/}
+
                 <Link
                   key={item.key}
                   to={item.route}

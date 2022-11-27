@@ -53,7 +53,12 @@ const AddVideo = () => {
               <Button
                 type="button"
                 onClick={() => {
-                  setShowModal(true);
+                  if(!formik.values.videoLink.includes("https://www.youtube.com/")){
+                    alert("Enter Valid Link")
+                  }
+                  else{
+                    setShowModal(true);
+                  }
                 }}
               >
                 <div className="text-base p-1">Add Video</div>

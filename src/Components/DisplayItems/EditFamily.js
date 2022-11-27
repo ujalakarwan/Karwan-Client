@@ -94,19 +94,34 @@ const EditProduct = () => {
               value={room.contact}
             />
             <label className="text-secondary">Relation:</label>
-            <input
-              style={{width:"25%",marginLeft:20,marginRight:20}}
-              type="text"
-              label="relation:"
-              name="room.relation"
-              onChange={(e) => {
-                var value={relation:e.target.value}
-                setroom(shopCart => ({
-                ...shopCart,
-                ...value
-              }))}}
-              value={room.relation}
-            />
+            <select
+                type="text"
+                label="relation:"
+                name="room.relation"
+                style={{width:"10%",marginLeft:20,marginRight:20}}
+                onChange={(e) => {
+                  var value={relation:e.target.value}
+                  setroom(shopCart => ({
+                  ...shopCart,
+                  ...value
+                }))}}
+                value={room.relation}
+              >
+                <option value={"Sister"}>Sister</option>
+                <option value={"Brother"}>Brother</option>
+                <option value={"Mother"}>Mother</option>
+                <option value={"Father"}>Father</option>
+                <option value={"Daughter"}>Daughter</option>
+                <option value={"Son"}>Son</option>
+                <option value={"Grandson"}>Grandson</option>
+                <option value={"Granddaughter"}>Granddaughter</option>
+                <option value={"Grandfather"}>Grandfather</option>
+                <option value={"Grandmother"}>Grandmother</option>
+
+
+                
+              </select>
+            
             <Button
               type="button" onClick={()=>{
                 if(Rooms.length>0){
@@ -173,7 +188,7 @@ const EditProduct = () => {
             show={showModal}
             onClick={() => setShowModal(false)}
           >
-            Are you sure you want to update Transport details?
+            Are you sure you want to update Family details?
             <div className="self-end">
               <Button type={"submit"} onClick={() => setShowModal(false)}>
                 OK

@@ -44,6 +44,14 @@ import Accountdetails from "./Components/DisplayItems/Accountdetails"
 import AccountManagement from "./Pages/AccountManagament"
 import Reviews from "./Pages/Reviews"
 import Wishlist from "./Pages/AllWishlists"
+import HotelBookings from "./Pages/BookingHotel"
+import TransportBookings from "./Pages/BookingTransport"
+import Bookvehicle from "./Pages/BookVehicle"
+import Bookroom from "./Pages/BookRoom"
+import Bookdetails from "./Pages/BookingHotelDetails"
+import Vehicledetails from "./Pages/BookingVehicleDetails"
+import Dashboard from "./Pages/Dashboard"
+import AddBook from "./Pages/AddBook"
 function App() {
   return (
     <>
@@ -67,6 +75,15 @@ function App() {
             <Route path="/dashboard/Accountdetails/:productId" element={<Accountdetails />} />
             <Route path="/dashboard/Reviews/:productId" element={<Reviews />} />
             <Route path="/dashboard/wishlists" element={<Wishlist />} />
+            <Route path="/dashboard/BookHotel" element={<HotelBookings />} />
+            <Route path="/dashboard/BookTransport" element={<TransportBookings />} />
+            <Route path="/dashboard/Stats" element={<Dashboard/>} />
+
+            <Route path="/dashboard/book-room/:productId" element={<Bookroom />} />
+            <Route path="/dashboard/book-vehicle/:productId" element={<Bookvehicle />} />
+
+            <Route path="/dashboard/Confirm-Room/:productId" element={<Bookdetails />} />
+            <Route path="/dashboard/Confirm-Vehicle/:productId" element={<Vehicledetails />} />
 
             <Route path="/dashboard/banners" element={<AllBanners />} />
             <Route
@@ -90,7 +107,7 @@ function App() {
             <Route path="/dashboard/add-product" element={<AddProduct />} />
             <Route path="/dashboard/add-hotel" element={<AddHotel />} />
             <Route path="/dashboard/add-transport" element={<AddTransport />} />
-
+            <Route path="/dashboard/add-book" element={<AddBook />} />
             <Route path="/dashboard/add-dua" element={<AddSupplication />} />
             <Route path="/dashboard/add-group" element={<AddGroup />} />
             <Route path="/dashboard/edit-family/:userId" element={<EditFamily />} />
