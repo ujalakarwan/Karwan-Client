@@ -9,7 +9,9 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import logo from "../../Assets/Images/logo.png";
 import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
 import { SvgIcon } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { FaUsers,FaUserPlus,FaPassport,FaUsersCog,FaSign,FaVideo,FaYoutube,FaPrayingHands,FaQuran
+,FaClipboardList,FaHotel,FaCaravan,FaCarAlt,FaShoppingCart,FaStoreAlt,FaTaxi,FaBook,FaBookReader,
+FaFolderPlus,FaHouseUser,FaRegStar,FaSignOutAlt } from "react-icons/fa";
 
 const Sidebar = (props) => {
   const navigate = useNavigate();
@@ -27,37 +29,37 @@ const Sidebar = (props) => {
   };
 
   const sidebarList = [
-    { key: "0", name: "Users", route: "/dashboard/users" },
-    { key: "1", name: "Family", route: "/dashboard/family" },
-    { key: "2", name: "Add User", route: "/dashboard/add-user" },
-    { key: "3", name: "Visa Requests", route: "/dashboard/visa-requests" },
-    { key: "4", name: "Groups", route: "/dashboard/groups" },
-    { key: "5", name: "Add Group", route: "/dashboard/add-group" },
-    { key: "6", name: "Banners", route: "/dashboard/banners" },
-    { key: "7", name: "Add Banner", route: "/dashboard/add-banner" },
-    { key: "8", name: "Videos", route: "/dashboard" },
-    { key: "9", name: "Add Video", route: "/dashboard/add-video" },
-    { key: "10", name: "Duas", route: "/dashboard/duas" },
-    { key: "11", name: "Add Dua", route: "/dashboard/add-dua" },
-    { key: "12", name: "Products", route: "/dashboard/products" },
-    { key: "13", name: "Add Product", route: "/dashboard/add-product" },
-    { key: "14", name: "Hotels", route: "/dashboard/hotels" },
-    { key: "15", name: "Add Hotel", route: "/dashboard/add-hotel" },
-    { key: "16", name: "Transports", route: "/dashboard/transports" },
-    { key: "17", name: "Add Transport", route: "/dashboard/add-transport" },
-    { key: "18", name: "Orders", route: "/dashboard/productCarts" },
-    { key: "19", name: "Hotel Bookings", route: "/dashboard/hotelbookings" },
-    { key: "20", name: "Transport Bookings", route: "/dashboard/transportbookings" },
-    { key: "21", name: "Add Book", route: "/dashboard/add-book" },
+    { key: "0", name: "Users", route: "/dashboard/users",icon:<FaUsers/> },
+    { key: "1", name: "Family", route: "/dashboard/family",icon:<FaUsers/> },
+    { key: "2", name: "Add User", route: "/dashboard/add-user",icon:<FaUserPlus/> },
+    { key: "3", name: "Visa Requests", route: "/dashboard/visa-requests",icon:<FaPassport/> },
+    { key: "4", name: "Groups", route: "/dashboard/groups" ,icon:<FaUsers/> },
+    { key: "5", name: "Add Group", route: "/dashboard/add-group",icon:<FaUsersCog/> },
+    { key: "6", name: "Banners", route: "/dashboard/banners",icon:<FaSign/> },
+    { key: "7", name: "Add Banner", route: "/dashboard/add-banner",icon:<FaSign/> },
+    { key: "8", name: "Videos", route: "/dashboard/videos",icon:<FaVideo/> },
+    { key: "9", name: "Add Video", route: "/dashboard/add-video",icon:<FaYoutube/> },
+    { key: "10", name: "Duas", route: "/dashboard/duas",icon:<FaPrayingHands/> },
+    { key: "11", name: "Add Dua", route: "/dashboard/add-dua",icon:<FaPrayingHands/> },
+    { key: "12", name: "Products", route: "/dashboard/products",icon:<FaQuran/> },
+    { key: "13", name: "Add Product", route: "/dashboard/add-product",icon:<FaClipboardList/> },
+    { key: "14", name: "Hotels", route: "/dashboard/hotels",icon:<FaHotel/> },
+    { key: "15", name: "Add Hotel", route: "/dashboard/add-hotel",icon:<FaHotel/> },
+    { key: "16", name: "Transports", route: "/dashboard/transports",icon:<FaCaravan/> },
+    { key: "17", name: "Add Transport", route: "/dashboard/add-transport",icon:<FaCarAlt/> },
+    { key: "18", name: "Orders", route: "/dashboard/productCarts",icon:<FaShoppingCart/> },
+    { key: "19", name: "Hotel Bookings", route: "/dashboard/hotelbookings",icon:<FaStoreAlt/> },
+    { key: "20", name: "Transport Bookings", route: "/dashboard/transportbookings",icon:<FaTaxi/> },
+    { key: "21", name: "Add Book", route: "/dashboard/add-book",icon:<FaBook/> },
 
-    { key: "22", name: "Books", route: "/dashboard/books" },
-    { key: "23", name: "Book Requests", route: "/dashboard/book-requests" },
-    { key: "24", name: "Manage Accounts", route: "/dashboard/Accounts" },
-    { key: "25", name: "Wishlist", route: "/dashboard/wishlists" },
-    { key: "26", name: "Book Hotel", route: "/dashboard/BookHotel" },
-    { key: "27", name: "Book Transport", route: "/dashboard/BookTransport" },
+    { key: "22", name: "Books", route: "/dashboard/books",icon:<FaBookReader/> },
+    { key: "23", name: "Book Requests", route: "/dashboard/book-requests",icon:<FaFolderPlus/> },
+    { key: "24", name: "Manage Accounts", route: "/dashboard/Accounts",icon:<FaHouseUser/> },
+    { key: "25", name: "Wishlist", route: "/dashboard/wishlists",icon:<FaRegStar/> },
+    { key: "26", name: "Book Hotel", route: "/dashboard/BookHotel",icon:<FaHotel/>  },
+    { key: "27", name: "Book Transport", route: "/dashboard/BookTransport",icon:<FaCaravan/> },
 
-    { key: "28", name: "Logout", route: "/", logout: true },
+    { key: "28", name: "Logout", route: "/", logout: true,icon:<FaSignOutAlt/> },
   ];
 
   return (
@@ -91,18 +93,17 @@ const Sidebar = (props) => {
             <h2 className="text-3xl text-white break-all">
               Karwan-e-Hasnath Team
             </h2>
+
           </div>
           {/* <p className="text-base break-all text-slate-200">
             {user?.email || "admin@gmail.com"}
           </p> */}
         </div>
+        <FaUsers/>
 
-        <ul className="flex flex-col gap-8">
-          {sidebarList.map((item, index) => {
-            return (
-              <div key={item.key} className="max-w-xs">
-{/*}                <svg data-testid="DeleteIcon"></svg>*/}
-
+        <ul className="flex flex-col gap">
+          {sidebarList.map((item, index) => (
+              <div key={item.key} className="max-w">
                 <Link
                   key={item.key}
                   to={item.route}
@@ -116,8 +117,8 @@ const Sidebar = (props) => {
                 </Link>
                 <hr className="md:hidden mt-2" />
               </div>
-            );
-          })}
+            )
+          )}
         </ul>
       </div>
       <Backdrop
@@ -168,7 +169,12 @@ const Sidebar = (props) => {
                       item.logout && logout();
                     }}
                   >
+                    <div style={{display:"flex"}}>
+                      <p style={{marginRight:10,marginTop:3}}>
+                      {item.icon}
+                      </p>
                     {item.name}
+                    </div>
                   </Link>
                 </div>
               );

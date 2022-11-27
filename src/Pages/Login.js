@@ -47,7 +47,7 @@ const Login = () => {
     try {
 
       //const user = await signInWithEmailAndPassword(auth, email, password);
-      var user=users.find((item)=>item.email==email && item.password==password)
+      var user=users?.find((item)=>item.email==email && item.password==password)
      console.log(user);
      if(user){
       localStorage.setItem("isLoggedIn", true);
