@@ -52,6 +52,7 @@ import Bookdetails from "./Pages/BookingHotelDetails"
 import Vehicledetails from "./Pages/BookingVehicleDetails"
 import Dashboard from "./Pages/Dashboard"
 import AddBook from "./Pages/AddBook"
+import UserLocation from "./Pages/UserLocation"
 function App() {
   return (
     <>
@@ -78,6 +79,7 @@ function App() {
             <Route path="/dashboard/BookHotel" element={<HotelBookings />} />
             <Route path="/dashboard/BookTransport" element={<TransportBookings />} />
             <Route path="/dashboard/Stats" element={<Dashboard/>} />
+            <Route path="/dashboard/user-location/:productId" element={<UserLocation />} />
 
             <Route path="/dashboard/book-room/:productId" element={<Bookroom />} />
             <Route path="/dashboard/book-vehicle/:productId" element={<Bookvehicle />} />

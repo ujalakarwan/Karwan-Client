@@ -13,7 +13,7 @@ const AllUsersItems = ({ user, check, setCheck }) => {
   return (
     <>
       <div className="grid grid-cols-12 place-items-center text-center">
-        <div className="col-span-7 lg:col-span-9 flex place-self-start text-left font-semibold text-primary">
+        <div className="col-span-7 lg:col-span-8 flex place-self-start text-left font-semibold text-primary">
           <div className="grid place-items-center mr-4">
             {user?.profilePic ? (
               <img
@@ -51,7 +51,16 @@ const AllUsersItems = ({ user, check, setCheck }) => {
             Edit
           </Button>
         </div>
-        <div className="col-span-3 lg:col-span-2">
+        <div className="col-span-2 lg:col-span-1">
+          <Button
+            onClick={() => {
+              navigate(`/dashboard/user-location/${user._id}`,{state:{location:user.location}});
+            }}
+          >
+            location
+          </Button>
+        </div>
+        <div className="col-span-3 lg:col-span-1">
           <Button
             alt
             onClick={() => {

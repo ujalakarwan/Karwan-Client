@@ -11,8 +11,9 @@ import Backdrop from "../Components/UI/BackdropModal";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import GoogleMapReact from 'google-map-react';
 import { async } from "@firebase/util";
-
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { FaMapMarkerAlt } from "react-icons/fa"
+const AnyReactComponent = ({ text }) =><FaMapMarkerAlt/>;
 const AddProduct = () => {
   const navigate = useNavigate();
 
@@ -30,6 +31,29 @@ const AddProduct = () => {
     },
     zoom: 16
   };
+  const center = {
+    lat: 33.6844,
+    lng: 73.0479
+  };
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: "AIzaSyBSp32hxkn2p8D6bF_HrkgsJKvq_x6tjV0"
+  })
+
+  const [map, setMap] = React.useState(null)
+
+  const onLoad = React.useCallback(function callback(map) {
+    // This is just an example of getting and using the map instance!!! don't just blindly copy!
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
+
+    setMap(map)
+  }, [])
+
+  const onUnmount = React.useCallback(function callback(map) {
+    setMap(null)
+  }, [])
+
   const encodeFileBase64 = (file) => {
     var reader = new FileReader();
     if (file) {
@@ -44,7 +68,10 @@ const AddProduct = () => {
       };
     }
   };
-
+  const containerStyle = {
+    width: '400px',
+    height: '400px'
+  };
   const formik = useFormik({
     initialValues: {
       Name: "",
@@ -274,10 +301,6 @@ const AddProduct = () => {
 
             <div className="flex items-center gap-6 mr-4">
             <p className="text-l" style={{fontweight:'bold'}}>Images</p>
-
-
-
-         
             <label
         className="block  py-1 px-2 cursor-pointer rounded text-center min-w-[8rem] max-w-[10rem]
         border-2 border-dashed border-primary 
@@ -301,6 +324,22 @@ const AddProduct = () => {
           Upload
         </Button>
             </div>
+            {isLoaded ? (
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={15}
+        onLoad={map => {
+          const bounds = new window.google.maps.LatLngBounds();
+          console.log("bounds",bounds)
+          map.fitBounds(bounds);
+        }}        
+        onUnmount={onUnmount}
+      >
+        { /* Child components, such as markers, info windows, etc. */ }
+        <AnyReactComponent/>
+      </GoogleMap>
+  ) : <>;</>}
            {/* <div style={{ height: '100vh', width: '100%' }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: "AIzaSyBSp32hxkn2p8D6bF_HrkgsJKvq_x6tjV0" }}
