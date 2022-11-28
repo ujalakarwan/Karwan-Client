@@ -22,37 +22,53 @@ const AddProduct = () => {
   const [Rooms,setRooms]=useState([])
   const [distances,setdistances]=useState([])
   const [room,setroom]=useState({Type:"",Size:"",id:0,Price:0,availability:[]})
-  const [distance,setdistance]=useState({place:"",distance:""})
+  const [distance,setdistance]=useState({place:"",distance:"",Location:{lat:0.0,lon:0.0}})
   const [fileBase64String, setFileBase64String] = useState("");
+  const [googleloc,setgoogleloc]=useState({lat:0.0,lon:0.0})
   const defaultProps = {
     center: {
-      lat: 33.6844,
-      lng: 73.0479
+      lat: 21.4362,
+      lng: 39.7064
     },
-    zoom: 16
+    zoom: 14
   };
-  const center = {
+  const centers = [{
+    kaaba:{
     lat: 33.6844,
     lng: 73.0479
-  };
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyBSp32hxkn2p8D6bF_HrkgsJKvq_x6tjV0"
-  })
-
-  const [map, setMap] = React.useState(null)
-
-  const onLoad = React.useCallback(function callback(map) {
-    // This is just an example of getting and using the map instance!!! don't just blindly copy!
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
-
-    setMap(map)
-  }, [])
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null)
-  }, [])
+    }},
+    {
+    Abubakar:{
+    lat: 33.6844,
+    lng: 73.0479
+    }},
+    {
+    jamarat:{
+      lat: 33.6844,
+      lng: 73.0479
+    }},
+    {Jannatulmala:{
+      lat: 33.6844,
+      lng: 73.0479
+    }},
+    {Masjidayesha:{
+      lat: 33.6844,
+      lng: 73.0479
+    }},
+    {MasjidJin:{
+      lat: 33.6844,
+      lng: 73.0479
+    }},
+    {Muzdalifah:{
+      lat: 33.6844,
+      lng: 73.0479
+    }},
+    {Mina:{
+      lat: 33.6844,
+      lng: 73.0479
+    }},
+  ];
+  
 
   const encodeFileBase64 = (file) => {
     var reader = new FileReader();
@@ -245,19 +261,80 @@ const AddProduct = () => {
 
             <div style={{display:'flex',flexDirection:'row'}}>
             <label className="text-secondary">Name:</label>
-            <input
-              style={{width:"25%",marginLeft:20,marginRight:20}}
-              type="text"
-              label="Place:"
+            <select
+                type="text"
+                label="Place:"
               name="distance.place"
               onChange={(e) => {
                 var value={place:e.target.value}
-                setdistance(shopCart => ({
+                 setdistance(shopCart => ({
                 ...shopCart,
                 ...value
-              }))}}
+              }))
+              if(e.target.value=="Kabba"){
+                const val={Location:{lat:21.4225,lon:39.8262}}
+                setdistance(shopCart => ({
+                  ...shopCart,
+                  ...val
+                }))
+              setgoogleloc({lat:21.4225,lon:39.8262})
+              }
+              else if(e.target.value=="Jamarat"){
+                const val={Location:{lat:21.4216,lon:39.8722}}
+                setdistance(shopCart => ({
+                  ...shopCart,
+                  ...val
+                }))
+                setgoogleloc({lat:21.4216,lon:39.8722})
+              }else if(e.target.value=="Jannatulmala"){
+                const val={Location:{lat:21.4356,lon:39.8259}}
+                setdistance(shopCart => ({
+                  ...shopCart,
+                  ...val
+                }))
+                setgoogleloc({lat:21.4356,lon:39.8259})
+              }else if(e.target.value=="Masjidayesha"){
+                const val={Location:{lat:21.4672,lon:39.8009}}
+                setdistance(shopCart => ({
+                  ...shopCart,
+                  ...val
+                }))
+                setgoogleloc({lat:21.4672,lon:39.8009})
+              }else if(e.target.value=="MasjidJin"){
+                const val={Location:{lat:21.4334,lon:39.8288}}
+                setdistance(shopCart => ({
+                  ...shopCart,
+                  ...val
+                }))
+                setgoogleloc({lat:21.4334,lon:39.8288})
+              }else if(e.target.value=="Muzdalifah"){
+                const val={Location:{lat:21.4093,lon:39.9104}}
+                setdistance(shopCart => ({
+                  ...shopCart,
+                  ...val
+                }))
+                setgoogleloc({lat:21.4093,lon:39.9104})
+              }else if(e.target.value=="Mina"){
+                const val={Location:{lat:21.4143,lon:39.8897}}
+                setdistance(shopCart => ({
+                  ...shopCart,
+                  ...val
+                }))
+                setgoogleloc({lat:21.4143,lon:39.8897})
+              }
+            }}
               value={distance.place}
-            />
+                style={{width:"10%",marginLeft:20,marginRight:20}}
+              >
+                <option value={"Kabba"}>Kaaba</option>
+                <option value={"Jamarat"}>Jamarat</option>
+                <option value={"Jannatulmala"}>Jannatulmala</option>
+                <option value={"Masjidayesha"}>Masjidayesha</option>
+                <option value={"MasjidJin"}>MasjidJin</option>
+                <option value={"Muzdalifah"}>Muzdalifah</option>
+                <option value={"Mina"}>Mina</option>
+              </select>
+           
             <label className="text-secondary">Distance:</label>
             <input
               style={{width:"25%",marginLeft:20,marginRight:20}}
@@ -272,6 +349,8 @@ const AddProduct = () => {
               }))}}
               value={distance.distance}
             />
+            
+          
             <Button
               type="button" onClick={()=>{
                 if(distances.length>0){
@@ -279,11 +358,12 @@ const AddProduct = () => {
                 }
                 else{setdistances([distance])}
                 console.log("saa",distances)
-                setdistance({place:"",distance:""})
+                setdistance({place:"",distance:"",Location:{lat:0.0,lon:0.0}})
               }}>
               <div className="text-base p-1">Add</div>
             </Button>
             </div>
+            
             {distances?.map((item,ind)=>(
             <div style={{display:'flex',flexDirection:'row',borderWidth:2,borderColor:'black',borderRadius:2,padding:7,alignSelf:'center'}}>
             <label className="text-secondary" style={{marginRight:10,fontWeight:'bold'}}>Place: </label>
@@ -300,6 +380,7 @@ const AddProduct = () => {
             ))}
 
             <div className="flex items-center gap-6 mr-4">
+              
             <p className="text-l" style={{fontweight:'bold'}}>Images</p>
             <label
         className="block  py-1 px-2 cursor-pointer rounded text-center min-w-[8rem] max-w-[10rem]
@@ -324,35 +405,8 @@ const AddProduct = () => {
           Upload
         </Button>
             </div>
-            {isLoaded ? (
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={15}
-        onLoad={map => {
-          const bounds = new window.google.maps.LatLngBounds();
-          console.log("bounds",bounds)
-          map.fitBounds(bounds);
-        }}        
-        onUnmount={onUnmount}
-      >
-        { /* Child components, such as markers, info windows, etc. */ }
-        <AnyReactComponent/>
-      </GoogleMap>
-  ) : <>;</>}
-           {/* <div style={{ height: '100vh', width: '100%' }}>
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: "AIzaSyBSp32hxkn2p8D6bF_HrkgsJKvq_x6tjV0" }}
-        defaultCenter={formik.values.Location}
-        defaultZoom={defaultProps.zoom}
-      >
-        <AnyReactComponent
-          lat={formik.values.Location.lat}
-          lng={formik.values.Location.lng}
-          text="My Marker"
-        />
-      </GoogleMapReact>
-              </div>*/}
+           
+            
           <div className="flex justify-end gap-8 mt-4">
             <Button
               type="button"

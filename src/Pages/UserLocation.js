@@ -23,6 +23,7 @@ const AddProduct = () => {
   const [room,setroom]=useState({Type:"",Size:"",id:0,Price:0,availability:[]})
   const [distance,setdistance]=useState({place:"",distance:""})
   const [fileBase64String, setFileBase64String] = useState("");
+  console.log("lat", state?.location?.lon)
   const defaultProps = {
     center: {
       lat: state?.location?.lat,
@@ -34,18 +35,31 @@ const AddProduct = () => {
 
   return (
     <div style={{ height: '100vh', width: '100%' }}>
+      
+      {
+          state?.location?.lat?
+    
     <GoogleMapReact
       bootstrapURLKeys={{ key: "AIzaSyBSp32hxkn2p8D6bF_HrkgsJKvq_x6tjV0" }}
       defaultCenter={defaultProps.center}
       defaultZoom={defaultProps.zoom}
     >
       <AnyReactComponent
-        lat= {state?.location?.lat}
-        lng= {state?.location?.lon}
+      //  lat= {state?.location?.lat}
+        //lng= {state?.location?.lon}
         text="My Marker"
       />
     </GoogleMapReact>
+    :
+    <div style={{marginTop:40,backgroundColor:'white',padding:40,borderRadius:15}}>
+
+    <div style={{marginLeft:"45%"}}>
+      <p style={{fontWeight:'bold',fontSize:20}}>No Location</p></div>
+      </div>
+
+    }
   </div>
+
   );
 };
 
