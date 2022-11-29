@@ -53,6 +53,9 @@ import Vehicledetails from "./Pages/BookingVehicleDetails"
 import Dashboard from "./Pages/Dashboard"
 import AddBook from "./Pages/AddBook"
 import UserLocation from "./Pages/UserLocation"
+import HolyPlaces from "./Pages/AddHolyPlaces"
+import Transaction from "./Pages/Transaction";
+import Transactiondetails from "./Components/DisplayItems/Transactiondetails"
 function App() {
   return (
     <>
@@ -80,7 +83,11 @@ function App() {
             <Route path="/dashboard/BookTransport" element={<TransportBookings />} />
             <Route path="/dashboard/Stats" element={<Dashboard/>} />
             <Route path="/dashboard/user-location/:productId" element={<UserLocation />} />
+            <Route path="/dashboard/holyplaces" element={<HolyPlaces />} />
+            <Route path="/dashboard/Transactions" element={<Transaction />} />
+            <Route path="/dashboard/show-transanction/:productId" element={<Transactiondetails />} />
 
+            
             <Route path="/dashboard/book-room/:productId" element={<Bookroom />} />
             <Route path="/dashboard/book-vehicle/:productId" element={<Bookvehicle />} />
 

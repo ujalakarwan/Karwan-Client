@@ -562,7 +562,7 @@ const filterbySearch=(data,fil,filt)=>{
           <hr className="max-w-full" />
           {/* Body */}
 
-          {isloading3 ? (
+          {isloading ? (
             <div className="z-30 m-auto mt-20">
               <Spinner />
             </div>
@@ -588,7 +588,29 @@ const filterbySearch=(data,fil,filt)=>{
               <div className="h-14 w-14 bg-slate-300 rounded-full" />
             )}
           </div>
+          <div>
           <p className="flex items-center">{item?.user_id?.userName}</p>
+          <div className="flex" >
+             
+              <p className="text-sm font-normal opacity-70">
+                Number:
+              </p>
+                <p className="text-sm font-normal opacity-70">
+                {item.user_id?.contact}
+              </p>
+              
+            </div>
+            <div className="flex" >
+             
+              <p className="text-sm font-normal opacity-70">
+                User Id:
+              </p>
+                <p className="text-sm font-normal opacity-70">
+                {item.user_id?._id}
+              </p>
+              
+            </div>
+            </div>
         </div>
        
         <div className="col-span-2 lg:col-span-1 no-print print:invisible">
@@ -611,12 +633,7 @@ const filterbySearch=(data,fil,filt)=>{
           
     
         </div>
-        <ReactToPrint
-          trigger={() => <Button className="center" style={{ marginBottom: "10px", width: 60, marginLeft: '89%', marginTop: 40, backgroundColor: 'darkblue' }} >
-            Print
-          </Button>}
-          content={() => componentRef}
-        />
+       
       </div>
     </Card>
   );

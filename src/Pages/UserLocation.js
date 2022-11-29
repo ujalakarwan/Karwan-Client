@@ -45,8 +45,8 @@ const AddProduct = () => {
       defaultZoom={defaultProps.zoom}
     >
       <AnyReactComponent
-      //  lat= {state?.location?.lat}
-        //lng= {state?.location?.lon}
+        lat= {state?.location?.lat}
+        lng= {state?.location?.lon}
         text="My Marker"
       />
     </GoogleMapReact>

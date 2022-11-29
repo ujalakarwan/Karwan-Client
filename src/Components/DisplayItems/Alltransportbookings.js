@@ -55,60 +55,7 @@ const AllProductsItems = ({ product, productCart, setProductCart }) => {
               </p>
             </div>
           </div>
-{flag?
-  <div className="flex flex-col gap-2">
-            
-            <div className="flex text-center gap-2">
-              <p className=" text-[#404852] font-bold ">{Type}</p>
-              <p className=" text-[#404852] self-end">:</p>
-              <p className="text-primary font-bold opacity-70">
-                {AccountNo}
-              </p>
-            </div>
-          </div>
 
-:
-          <div style={{display:'flex',flexDirection:'row',margin:5,height:"26%",justifyContent:"center"}} className="print:invisible">
-        <label style={{margin:10}}>Type:</label>
-
-              <select
-                type="text"
-                name="Type"
-                style={{width:"10%"}}
-                onChange={(e)=>settype(e.target.value)}
-                value={Type}
-              >
-                <option value={"Cheque"}>Cheque</option>
-                <option value={"Advance"}>Advance</option>
-                
-              </select>
-            
-            <label style={{marginLeft:12,marginTop:10}} >Account No:</label>
-            <input
-              style={{width:"23%",marginLeft:20,marginRight:20}}
-              type="text"
-              label="Account No:"
-              name="AccountNo"
-              onChange={(e) => {
-                setAccount(e.target.value)}}
-              value={AccountNo}
-            />
-              
-            
-      <Button
-        onClick={async() => {
-
-          await transportBooking.updateProductCart(product._id, {
-            paymentstatus: {Type:Type,AccountNo:AccountNo},
-          });
-          setflag(true)
-         // navigate("/dashboard/Accounts");
-        }}
-      >
-        Add Payment
-      </Button>
-    </div>
-}
       <Backdrop
         title="Remove User!"
         show={showModal}

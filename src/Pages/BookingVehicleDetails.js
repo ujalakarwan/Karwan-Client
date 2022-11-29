@@ -9,7 +9,7 @@ import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import useFetchDoc from "../hooks/useFetchDoc";
 import InputFile from "../Components/UI/InputFile";
-import TextArea from "../Components/UI/TextArea";
+import Select from "../Components/UI/Select";
 
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -30,9 +30,12 @@ const EditProduct = () => {
   const [total,setTotal]=useState(state.Vehicle?.Price)
   const [startdate,setstartdate]=useState()
   const [enddate,setenddate]=useState()
-  
+  const [userid,setuserid]=useState()
   const { docData: orders} = useFetchDoc(
     `/get-productCarts`
+  );
+  const { docData: users} = useFetchDoc(
+    `/get-users`
   );
   const [productCart,setProductCart]=useState(orders)
   const { docData: hotel } = useFetchDoc(
@@ -73,7 +76,7 @@ const EditProduct = () => {
    
     var hotelobj=hotel?.Vehicle.filter((item)=>item.id!=state?.Vehicle.id)
     hotelobj.push(avail)
-    const hotell=hotelbooking.find((item)=>item.Transport?._id==state.Product?.Product?._id)
+    const hotell=hotelbooking.find((item)=>item.Transport?._id==state.Product?.Product?._id && item?.user_id==userid)
     console.log("availability",hotell)
     var bookedroom=[]
     if(hotell!=undefined){
@@ -86,7 +89,7 @@ const EditProduct = () => {
       totalcost=totalcost+item.Price
     })
     
-    var obj={user_id:user,Transport:state.Product?.Product?._id,bookedVehicle:bookedroom,Total:totalcost}
+    var obj={user_id:userid,Transport:state.Product?.Product?._id,bookedVehicle:bookedroom,Total:totalcost}
     await hotelBookingService.deleteProductCart(hotell?._id)
     await hotelBookingService.addProductCart(obj)
     await hotelService.updateHotel(state.Product?.Product?._id,{Vehicle:hotelobj})
@@ -107,8 +110,25 @@ const EditProduct = () => {
           className="flex flex-col flex-wrap gap-8 px-8 lg:px-12"
         >
           <h1 className="text-2xl">Booking Details</h1>
+          <Select
+                type="text"
+                label="User:"
+                name="userid"
+                style={{width:"10%",marginLeft:20,marginRight:20}}
+                onChange={(e) => {
+                  setuserid(e.target.value)
+                  }}
+                value={userid}
+              >
+                {
+                  users?.map((item)=>(
+                    <option value={item?._id}>{item.userName}</option>
+
+                  ))
+                }
+              </Select>
           <section className={`flex flex-row flex-wrap gap-32 `}>
-            
+          
             <Input
             disabled
               width="full"

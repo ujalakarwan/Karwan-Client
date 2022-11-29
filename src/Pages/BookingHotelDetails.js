@@ -9,7 +9,7 @@ import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import useFetchDoc from "../hooks/useFetchDoc";
 import InputFile from "../Components/UI/InputFile";
-import TextArea from "../Components/UI/TextArea";
+import Select from "../Components/UI/Select";
 
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -30,7 +30,8 @@ const EditProduct = () => {
   const [total,setTotal]=useState(state.Room?.Price)
   const [startdate,setstartdate]=useState()
   const [enddate,setenddate]=useState()
-  
+  const [userid,setuserid]=useState()
+
   const { docData: orders} = useFetchDoc(
     `/get-productCarts`
   );
@@ -41,7 +42,9 @@ const EditProduct = () => {
   const { docData: hotelbooking } = useFetchDoc(
     `/get-hotelbookings`
   );
-
+  const { docData: users} = useFetchDoc(
+    `/get-users`
+  );
   let componentRef = useRef(null);
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -73,7 +76,7 @@ const EditProduct = () => {
    
     var hotelobj=hotel?.Room.filter((item)=>item.id!=state?.Room.id)
     hotelobj.push(avail)
-    const hotell=hotelbooking.find((item)=>item.hotel?._id==state.Product?.Product?._id)
+    const hotell=hotelbooking.find((item)=>item.hotel?._id==state.Product?.Product?._id && item?.user_id==userid)
     console.log("availability",hotell)
     var bookedroom=[]
     if(hotell!=undefined){
@@ -86,13 +89,13 @@ const EditProduct = () => {
       totalcost=totalcost+item.Price
     })
     
-    var obj={user_id:user,hotel:state.Product?.Product?._id,bookedRoom:bookedroom,Total:totalcost}
+    var obj={user_id:userid,hotel:state.Product?.Product?._id,bookedRoom:bookedroom,Total:totalcost}
     await hotelBookingService.deleteProductCart(hotell?._id)
     await hotelBookingService.addProductCart(obj)
     await hotelService.updateHotel(state.Product?.Product?._id,{Room:hotelobj})
     console.log("whole obj",obj)
     alert("Room Booked")
-    navigate("/dashboard/BookRoom")
+    navigate("/dashboard/BookHotel")
 
     }
 
@@ -108,6 +111,23 @@ const EditProduct = () => {
           className="flex flex-col flex-wrap gap-8 px-8 lg:px-12"
         >
           <h1 className="text-2xl">Booking Details</h1>
+          <Select
+                type="text"
+                label="User:"
+                name="userid"
+                style={{width:"10%",marginLeft:20,marginRight:20}}
+                onChange={(e) => {
+                  setuserid(e.target.value)
+                  }}
+                value={userid}
+              >
+                {
+                  users?.map((item)=>(
+                    <option value={item?._id}>{item.userName}</option>
+
+                  ))
+                }
+              </Select>
           <section className={`flex flex-row flex-wrap gap-32 `}>
             
             <Input

@@ -107,6 +107,9 @@ const EditProduct = () => {
                 }))}}
                 value={room.relation}
               >
+                
+                <option value={"Wife"}>Wife</option>
+                <option value={"Husband"}>Husband</option>
                 <option value={"Sister"}>Sister</option>
                 <option value={"Brother"}>Brother</option>
                 <option value={"Mother"}>Mother</option>

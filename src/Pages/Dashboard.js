@@ -50,6 +50,19 @@ const Dashboard = () => {
     check
   );
  
+  const { data: banners, isloading10 } = useFetch(
+    "/get-banners",
+    check
+  );
+
+ 
+ 
+  const { data: bookRequests, isloading12 } = useFetch(
+    "/get-bookRequests",
+    check
+  );
+ 
+ 
   console.log("users",users)
   console.log("visas",visas)
   console.log("books",books)
@@ -135,6 +148,14 @@ const Dashboard = () => {
                   <div style={{display:'flex',flexDirection:'row',color:'darkgreen'}}>
                   <p className="text-xl">Videos: </p>
                   <p className="text-xl">{" "+videos?.length}</p>
+                  </div>
+                  <div style={{display:'flex',flexDirection:'row',color:'darkgreen'}}>
+                  <p className="text-xl">Banners: </p>
+                  <p className="text-xl">{" "+banners?.length}</p>
+                  </div>
+                  <div style={{display:'flex',flexDirection:'row',color:'darkgreen'}}>
+                  <p className="text-xl">BookRequests: </p>
+                  <p className="text-xl">{" "+bookRequests?.length}</p>
                   </div>
                   </div>
                   }

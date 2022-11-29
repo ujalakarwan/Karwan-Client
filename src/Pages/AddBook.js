@@ -34,18 +34,21 @@ const AddProduct = () => {
   const formik = useFormik({
     initialValues: {
       bookTitle: "",
-      book: fileBase64String,
+      book: "",
     },
     enableReinitialize: true,
     onSubmit: async (values) => {
-      console.log(values);
       if (
         values.bookTitle &&
         values.book
       ) {
-        console.log("filesa",fileBase64String)
-        await productService.addBook(values);
+        const res=await productService.addBook(values);
+        console.log("ress",res)
+        if(!res){
+          alert("Book Already Exists")
+        }
         navigate("/dashboard/books");
+
       }
     },
   });
@@ -59,35 +62,7 @@ const AddProduct = () => {
         >
           <h1 className="text-2xl">Add Book</h1>
           <section className={`flex flex-col flex-wrap gap-6 `}>
-            <div className="flex items-center gap-6 mr-4">
-              
-               <label
-        className="block  py-1 px-2 cursor-pointer rounded text-center min-w-[8rem] max-w-[10rem]
-        border-2 border-dashed border-primary 
-        hover:border-3 hover:border-dashed hover:border-primary 
-        transition ease-out duration-1000"
-      >
-        <span className="text-sm">
-          {productPic?.name ? productPic?.name : "Choose file"}
-        </span>
-        <input className="hidden" type="file" name={productPic?.name}  onChange={(e) => {
-                  setProductPic(e.target.files[0])
-                  encodeFileBase64(e.target.files[0])
-                }} />
-      </label>
-
-    
-        <Button
-          type="button"
-          //onClick={() => {
-          //  encodeFileBase64(productPic);
-          //}}
-        >
-          Upload
-        </Button>
-    
-             
-            </div>
+            
             <Input
               width="full"
               type="text"
@@ -96,7 +71,15 @@ const AddProduct = () => {
               onChange={formik.handleChange}
               value={formik.values.bookTitle}
             />
-           
+           <Input
+              width="full"
+              type="text"
+              label="Book:"
+              name="book"
+              onChange={formik.handleChange}
+              value={formik.values.book}
+            />
+
           </section>
 
           <div className="flex justify-end gap-8 mt-4">

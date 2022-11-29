@@ -54,45 +54,7 @@ const AllProductsItems = ({ product, productCart, setProductCart }) => {
             </div>
           </div>
 
-          <div style={{display:'flex',flexDirection:'row',margin:5,height:"27%",justifyContent:"center"}} className="print:invisible">
-        <label style={{margin:10}}>Type:</label>
-
-              <select
-                type="text"
-                name="Type"
-                style={{width:"10%"}}
-                onChange={(e)=>settype(e.target.value)}
-                value={Type}
-              >
-                <option value={"Cheque"}>Cheque</option>
-                <option value={"Advance"}>Advance</option>
-                
-              </select>
-            
-            <label style={{marginLeft:12,marginTop:10}} >Account No:</label>
-            <input
-              style={{width:"23%",marginLeft:20,marginRight:20}}
-              type="text"
-              label="Account No:"
-              name="AccountNo"
-              onChange={(e) => {
-                setAccount(e.target.value)}}
-              value={AccountNo}
-            />
-              
-            
-      <Button
-        onClick={async() => {
-
-          await hotelBooking.updateProductCart(product._id, {
-            paymentstatus: {Type:Type,AccountNo:AccountNo},
-          });
-          navigate("/dashboard/Accounts");
-        }}
-      >
-        Add Payment
-      </Button>
-    </div>
+         
       <Backdrop
         title="Remove User!"
         show={showModal}

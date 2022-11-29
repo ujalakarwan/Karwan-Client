@@ -42,35 +42,16 @@ const AllUsersItems = ({ user, check, setCheck }) => {
 
 
         </div>
-        <div className="col-span-2 lg:col-span-1">
+        <div className="col-span lg:col-span">
           <Button
             onClick={() => {
-              navigate(`/dashboard/edit-user/${user._id}`);
+              navigate(`/dashboard/show-transanction/${user._id}`,{state:{user:user}});
             }}
           >
-            Edit
+            Transaction History
           </Button>
         </div>
-        <div className="col-span-2 lg:col-span-1">
-          <Button
-            onClick={() => {
-              navigate(`/dashboard/user-location/${user._id}`,{state:{location:user.location}});
-            }}
-          >
-            location
-          </Button>
-        </div>
-        <div className="col-span-3 lg:col-span-1">
-          <Button
-            alt
-            onClick={() => {
-              setShowModal(true);
-              // alert(userName + " with Id " + userId + " deleted");
-            }}
-          >
-            Delete
-          </Button>
-        </div>
+        
       </div>
       <Backdrop
         title="Delete User!"
