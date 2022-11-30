@@ -14,7 +14,7 @@ import hotelService from "../../api/hotelService.api";
 const EditProduct = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
-
+  const [flag,setflag]=useState(false)
   const [showModal, setShowModal] = useState(false);
   const [productPic, setProductPic] = useState();
   
@@ -26,20 +26,18 @@ const EditProduct = () => {
   );
   const [Rooms,setRooms]=useState(product?.Room)
   const [distances,setdistances]=useState(product?.distances)
+
   console.log(product);
   console.log(Rooms);
   useEffect(() => {
     setRooms(product?.Room)
     setdistances(product?.distances)
   }, [product]);
-  const [profilePic, setProfilePic] = useState(null);
   const encodeFileBase64 = (file) => {
     var reader = new FileReader();
     var array=[]
     var arr=file
-    console.log("gfdo",file)
-    
-      console.log("dbasj")
+    setflag(true)
       if (file) {
          reader.readAsDataURL(file);
        reader.onload =() => {
@@ -61,15 +59,21 @@ const EditProduct = () => {
       Facilities: product?.Facilities,
       Description: product?.Description,
       Location:product?.Location,
-      images:fileBase64String,
+      images:"",
       Room: product?.Room,
       distances:product?.distances
     },
     enableReinitialize: true,
     onSubmit: async (values) => {
-      values.Room=Rooms
+          if(!fileBase64String){
+            values.images=product?.images
+          }
+          else{
+            values.images=fileBase64String
+          }
+          values.Room=Rooms
           values.distances=distances
-          values.images=fileBase64String
+          
           console.log("sdaca",values)
       await hotelService.updateHotel(productId, values);
      navigate("/dashboard/hotels");
@@ -122,6 +126,20 @@ const EditProduct = () => {
             {console.log("red",Rooms)}
       <label className="text-secondary font-semibold">Room:</label>
       <div style={{display:'flex',flexDirection:'row'}}>
+      <label className="text-secondary">Id:</label>
+            <input
+              style={{width:"25%",marginLeft:20,marginRight:20}}
+              type="text"
+              label="Id:"
+              name="room.id"
+              onChange={(e) => {
+                var value={id:e.target.value}
+                setroom(shopCart => ({
+                ...shopCart,
+                ...value
+              }))}}
+              value={room.id}
+            />
             <label className="text-secondary">Type:</label>
             <input
               style={{width:"25%",marginLeft:20,marginRight:20}}
@@ -179,6 +197,8 @@ const EditProduct = () => {
 
             {Rooms?.map((item,ind)=>(
             <div style={{display:'flex',flexDirection:'row',borderWidth:2,borderColor:'black',borderRadius:2,padding:7,alignSelf:'center'}}>
+            <label className="text-secondary" style={{marginRight:10,fontWeight:'bold'}}>Id: </label>
+            <p style={{marginRight:20}}>{item.id}</p>
             <label className="text-secondary" style={{marginRight:10,fontWeight:'bold'}}>Type: </label>
             <p style={{marginRight:20}}>{item.Type}</p>
             <label className="text-secondary" style={{marginRight:10,fontWeight:'bold'}}>Size: </label>
@@ -293,6 +313,15 @@ const EditProduct = () => {
               >
                 Upload
               </InputFile>
+              {
+                fileBase64String?
+                <p>Uploaded</p>:
+                flag?
+                <p>Uploading</p>
+                :
+                <p></p>
+
+              }
             </div>
 
           <div className="flex justify-end gap-8 mt-4">

@@ -32,7 +32,8 @@ const EditProduct = () => {
   const formik = useFormik({
     initialValues: {
       userName: product?.userName,
-      family:product?.family
+      family:product?.family,
+      
     },
     enableReinitialize: true,
     onSubmit: async (values) => {
@@ -86,11 +87,20 @@ const EditProduct = () => {
               label="contact:"
               name="room.contact"
               onChange={(e) => {
-                var value={contact:e.target.value}
-                setroom(shopCart => ({
-                ...shopCart,
-                ...value
-              }))}}
+                  if(isNaN(e.target.value)){
+                    alert("Enter Correct Number")
+                  }
+                  else{
+                    var value={contact:e.target.value}
+                    setroom(shopCart => ({
+                    ...shopCart,
+                    ...value
+                  }))
+                  }
+                
+                
+                
+                }}
               value={room.contact}
             />
             <label className="text-secondary">Relation:</label>

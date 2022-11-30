@@ -79,18 +79,22 @@ const AddGroup = () => {
                       setIsMember(false);
 
                       let preMember = group?.filter(
-                        (member) => member?.email === formik.values.memberEmail
+                        (member) => member?.email !== formik.values.memberEmail
                       );
-                      console.log(preMember.length);
-                      if (preMember.length === 0) {
-                        let filteredUser = users.filter(
-                          (user) => user?.email === formik.values.memberEmail
+                      console.log("memberEmail", group);
+
+                        let filteredUser = users?.find(
+                          (user) => user?.email == formik.values.memberEmail+""
                         );
-                        setGroup([...group, filteredUser[0]]);
+                        console.log("filtered user",filteredUser)
+                        if(filteredUser){
+                          
+                        setGroup([...group, filteredUser])}
+                        else{
+                          alert("Member does not exist")
+                        }
                         console.log(group);
-                      } else {
-                        setIsMember(true);
-                      }
+                     
                     }
                     
                   }}

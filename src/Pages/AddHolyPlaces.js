@@ -16,7 +16,6 @@ import { FaMapMarkerAlt } from "react-icons/fa"
 import useFetchDoc from "../hooks/useFetchDoc";
 import { style } from "@mui/system";
 
-const AnyReactComponent = ({ text }) =><FaMapMarkerAlt/>;
 const AddProduct = () => {
   const navigate = useNavigate();
 
@@ -28,44 +27,13 @@ const AddProduct = () => {
     `/get-holyplaces`
   );
   useEffect(() => {
-    setdistances(holyplaces[0]?.distances)
+    console.log("holyplaces",holyplaces)
+    if(holyplaces){
+      setdistances(holyplaces[0]?.distances)
+
+    }
   }, [holyplaces]);
-  const centers = [{
-    kaaba:{
-    lat: 33.6844,
-    lng: 73.0479
-    }},
-    {
-    Abubakar:{
-    lat: 33.6844,
-    lng: 73.0479
-    }},
-    {
-    jamarat:{
-      lat: 33.6844,
-      lng: 73.0479
-    }},
-    {Jannatulmala:{
-      lat: 33.6844,
-      lng: 73.0479
-    }},
-    {Masjidayesha:{
-      lat: 33.6844,
-      lng: 73.0479
-    }},
-    {MasjidJin:{
-      lat: 33.6844,
-      lng: 73.0479
-    }},
-    {Muzdalifah:{
-      lat: 33.6844,
-      lng: 73.0479
-    }},
-    {Mina:{
-      lat: 33.6844,
-      lng: 73.0479
-    }},
-  ];
+  
   
 
   

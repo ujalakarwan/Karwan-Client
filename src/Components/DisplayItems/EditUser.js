@@ -78,6 +78,14 @@ const EditUser = () => {
               </InputFile> */}
             </div>
             <Input
+              disabled
+              width="full"
+              type="text"
+              name="userId"
+              label="User Id:"
+              value={userId}
+            />
+            <Input
               width="full"
               type="text"
               name="userName"

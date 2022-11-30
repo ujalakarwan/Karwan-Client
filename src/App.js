@@ -56,6 +56,7 @@ import UserLocation from "./Pages/UserLocation"
 import HolyPlaces from "./Pages/AddHolyPlaces"
 import Transaction from "./Pages/Transaction";
 import Transactiondetails from "./Components/DisplayItems/Transactiondetails"
+import Location from "./Pages/AllUsersLocation"
 function App() {
   return (
     <>
@@ -86,6 +87,7 @@ function App() {
             <Route path="/dashboard/holyplaces" element={<HolyPlaces />} />
             <Route path="/dashboard/Transactions" element={<Transaction />} />
             <Route path="/dashboard/show-transanction/:productId" element={<Transactiondetails />} />
+            <Route path="/dashboard/UserLocations" element={<Location />} />
 
             
             <Route path="/dashboard/book-room/:productId" element={<Bookroom />} />

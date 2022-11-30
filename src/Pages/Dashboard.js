@@ -8,6 +8,12 @@ import Spinner from "../Components/UI/Spinner";
 
 const Dashboard = () => {
   const [check, setCheck] = useState(false);
+  const [currentDate,setcurrentDate]=useState()
+  const [hajj,sethajj]=useState()
+  const [umrah,setumrah]=useState()
+  const [osales,setosales]=useState()
+  const [hsales,sethsales]=useState()
+  const [tsales,settsales]=useState()
 
   const { data: users, isloading } = useFetch(
     "/get-users",
@@ -55,6 +61,10 @@ const Dashboard = () => {
     check
   );
 
+  const { data: groups, isloading13 } = useFetch(
+    "/get-groups",
+    check
+  );
  
  
   const { data: bookRequests, isloading12 } = useFetch(
@@ -74,11 +84,31 @@ const Dashboard = () => {
   console.log("hotelbookings",hotelbookings)
     
 
-
+useEffect(()=>{
   const date = new Date();
-  const currentDate = `${date.getDate()} / ${date.getMonth()} / ${date.getFullYear()}`;
-  const hajj=visas?.filter((item)=>item.visaType=="hajj")
-  const umrah=visas?.filter((item)=>item.visaType=="umrah")
+  setcurrentDate ( `${date.getDate()} / ${date.getMonth()} / ${date.getFullYear()}`);
+  sethajj(visas?.filter((item)=>item.visaType=="hajj"))
+  setumrah(visas?.filter((item)=>item.visaType=="umrah"))
+  var a=0,b=0,c=0;
+  orders?.map((item)=>{
+    if((item?.Total)){
+      a=a+item?.Total
+    }
+  })
+  setosales(a)
+  hotelbookings?.map((item)=>{
+    if((item?.Total)){
+      b=b+item?.Total
+    }
+   })
+   sethsales(b)
+   transportbookings?.map((item)=>{
+    if((item?.Total)){
+      c=c+item?.Total
+    }   })
+   settsales(c)
+},[bookRequests])
+ 
   return (
     <Card>
       <div className="w-[90%] max-w-5xl h-full mx-auto">
@@ -100,8 +130,14 @@ const Dashboard = () => {
             <div className="z-30 m-auto mt-20">
               <Spinner />
             </div>
-          ) : 
-                  <p className="text-2xl">{users?.length}</p>}
+          ) : <>
+                  <p className="text-2xl">{users?.length}</p>
+                  <div style={{display:'flex',flexDirection:'row',marginTop:20,color:'darkgreen'}}>
+                  <p className="text-xl">Total Groups: </p>
+                  <p className="text-xl">{groups?.length}</p>
+                  </div>
+                  </>
+                  }
                 </div>
                 <div
                   className="flex flex-col gap-6 items-center py-10 lg:py-6 col-span-4 sm:col-span-2 lg:col-span-1 rounded-xl border-2 border-gray-500 text-center
@@ -178,6 +214,10 @@ const Dashboard = () => {
                   <p className="text-xl">Orders: </p>
                   <p className="text-xl">{" "+orders?.length}</p>
                   </div>
+                  <div style={{display:'flex',flexDirection:'row',marginTop:20,color:'darkgreen',marginTop:20,color:'darkgreen'}}>
+                  <p className="text-xl">Order Sales: </p>
+                  <p className="text-xl">{" "+osales}</p>
+                  </div>
                   </div>
                   }
             </div>
@@ -199,6 +239,10 @@ const Dashboard = () => {
                   <p className="text-xl">Hotel Bookings: </p>
                   <p className="text-xl">{" "+hotelbookings?.length}</p>
                   </div>
+                  <div style={{display:'flex',flexDirection:'row',marginTop:20,color:'darkgreen',marginTop:20,color:'darkgreen'}}>
+                  <p className="text-xl">Sales: </p>
+                  <p className="text-xl">{" "+hsales}</p>
+                  </div>
                   </div>
                   }
             </div>
@@ -219,6 +263,10 @@ const Dashboard = () => {
                   <div style={{display:'flex',flexDirection:'row',marginTop:20,color:'darkgreen'}}>
                   <p className="text-xl">Transport Bookings: </p>
                   <p className="text-xl">{" "+transportbookings?.length}</p>
+                  </div>
+                  <div style={{display:'flex',flexDirection:'row',marginTop:20,color:'darkgreen',marginTop:20,color:'darkgreen'}}>
+                  <p className="text-xl">Sales: </p>
+                  <p className="text-xl">{"Rs. "+tsales}</p>
                   </div>
                   </div>
                   }

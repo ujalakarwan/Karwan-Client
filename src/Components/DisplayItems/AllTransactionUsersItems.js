@@ -13,7 +13,7 @@ const AllUsersItems = ({ user, check, setCheck }) => {
   return (
     <>
       <div className="grid grid-cols-12 place-items-center text-center">
-        <div className="col-span-7 lg:col-span-8 flex place-self-start text-left font-semibold text-primary">
+        <div className="col-span lg:col-span-8 flex place-self-start text-left font-semibold text-primary">
           <div className="grid place-items-center mr-4">
             {user?.profilePic ? (
               <img

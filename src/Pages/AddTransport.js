@@ -21,6 +21,7 @@ const AddProduct = () => {
   const [Rooms,setRooms]=useState([])
   const [room,setroom]=useState({Type:"",id:0,Price:0,availability:[]})
   const [fileBase64String, setFileBase64String] = useState("");
+  const [flag,setflag]=useState(false)
   const defaultProps = {
     center: {
       lat: 33.6844,
@@ -30,6 +31,7 @@ const AddProduct = () => {
   };
   const encodeFileBase64 = (file) => {
     var reader = new FileReader();
+    setflag(true)
     if (file) {
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -208,6 +210,15 @@ const AddProduct = () => {
         >
           Upload
         </Button>
+        {
+                fileBase64String?
+                <p>Uploaded</p>:
+                flag?
+                <p>Uploading</p>
+                :
+                <p></p>
+
+              }
             </div>
            
           </section>

@@ -561,6 +561,7 @@ const EditProduct = () => {
                   const a=Advance.concat(Cheques)
                   console.log("aaa",a)
                   await userService.updateUser(productId,{AdditionalCharges:a});
+                  alert("Status Updated")
       
                 
               }}

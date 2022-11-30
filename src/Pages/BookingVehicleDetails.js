@@ -88,7 +88,14 @@ const EditProduct = () => {
     bookedroom.map((item)=>{
       totalcost=totalcost+item.Price
     })
-    
+    var obj;
+    if(userid==undefined){
+      setuserid(users[0]?._id)
+       obj={user_id:users[0]?._id,hotel:state.Product?.Product?._id,bookedRoom:bookedroom,Total:totalcost}
+    }
+    else{
+      obj={user_id:userid,hotel:state.Product?.Product?._id,bookedRoom:bookedroom,Total:totalcost}
+    }
     var obj={user_id:userid,Transport:state.Product?.Product?._id,bookedVehicle:bookedroom,Total:totalcost}
     await hotelBookingService.deleteProductCart(hotell?._id)
     await hotelBookingService.addProductCart(obj)
@@ -100,6 +107,11 @@ const EditProduct = () => {
 
   useEffect(() => {
     setProductCart(orders?.products)
+    if(users){
+      setuserid(users[0]?._id)
+
+    }
+
   }, [user]);
  
   return (

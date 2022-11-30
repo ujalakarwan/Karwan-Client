@@ -12,7 +12,7 @@ import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import GoogleMapReact from 'google-map-react';
 import { async } from "@firebase/util";
 import { FaMapMarkerAlt } from "react-icons/fa"
-const AnyReactComponent = ({ text }) =><FaMapMarkerAlt/>;
+const AnyReactComponent = () =><div ><FaMapMarkerAlt size={25}/></div>;
 const AddProduct = () => {
   const navigate = useNavigate();
   const {state}=useLocation()
@@ -35,16 +35,20 @@ const AddProduct = () => {
 
   return (
     <div style={{ height: '100vh', width: '100%' }}>
-      
+      <div style={{marginLeft:"45%",display:'flex'}}>
+      <p style={{fontWeight:'bold',fontSize:16}}>Last Active Time:</p>
+      <p style={{fontWeight:'bold',fontSize:16}}>{state?.time?.Time}</p>
+      </div>
       {
           state?.location?.lat?
     
+
     <GoogleMapReact
       bootstrapURLKeys={{ key: "AIzaSyBSp32hxkn2p8D6bF_HrkgsJKvq_x6tjV0" }}
       defaultCenter={defaultProps.center}
       defaultZoom={defaultProps.zoom}
     >
-      <AnyReactComponent
+      <AnyReactComponent style={{size:"100%"}}
         lat= {state?.location?.lat}
         lng= {state?.location?.lon}
         text="My Marker"

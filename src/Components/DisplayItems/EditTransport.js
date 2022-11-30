@@ -21,6 +21,7 @@ const EditProduct = () => {
   const [room,setroom]=useState({Type:"",Size:"",Price:0,availability:[]})
   const [distance,setdistance]=useState({place:"",distance:""})
   const [fileBase64String, setFileBase64String] = useState("");
+  const [flag,setflag]=useState(false)
   const { docData: product, isloading } = useFetchDoc(
     `/get-transport/${productId}`
   );
@@ -35,6 +36,8 @@ const EditProduct = () => {
     var reader = new FileReader();
     var array=[]
     var arr=file
+    setflag(true)
+
     console.log("gfdo",file)
     
       console.log("dbasj")
@@ -42,7 +45,6 @@ const EditProduct = () => {
          reader.readAsDataURL(file);
        reader.onload =() => {
           var Base64 = reader.result;
-
           setFileBase64String(Base64);
         };
         reader.onerror = (error) => {
@@ -58,12 +60,17 @@ const EditProduct = () => {
       Name: product?.Name,
       Facilities: product?.Facilities,
       Vehicle: product?.Vehicle,
-      images:fileBase64String
+      images:""
     },
     enableReinitialize: true,
     onSubmit: async (values) => {
+      if(!fileBase64String){
+        values.images=product?.images
+      }
+      else{
+        values.images=fileBase64String
+      }
       values.Vehicle=Rooms
-      values.images=fileBase64String
           console.log("sdaca",values)
       await hotelService.updateHotel(productId, values);
      navigate("/dashboard/transports");
@@ -203,6 +210,15 @@ const EditProduct = () => {
               >
                 Upload
               </InputFile>
+              {
+                fileBase64String?
+                <p>Uploaded</p>:
+                flag?
+                <p>Uploading</p>
+                :
+                <p></p>
+
+              }
             </div>
 
           <div className="flex justify-end gap-8 mt-4">

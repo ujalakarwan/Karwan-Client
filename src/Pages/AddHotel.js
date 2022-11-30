@@ -20,6 +20,7 @@ const AddProduct = () => {
   const [showModal, setShowModal] = useState(false);
   const [productPic, setProductPic] = useState(null);
   const [Rooms,setRooms]=useState([])
+  const [flag,setflag]=useState(false)
   const [distances,setdistances]=useState([])
   const [room,setroom]=useState({Type:"",Size:"",id:0,Price:0,availability:[]})
   const [distance,setdistance]=useState({place:"",distance:"",Location:{lat:0.0,lon:0.0}})
@@ -72,6 +73,7 @@ const AddProduct = () => {
 
   const encodeFileBase64 = (file) => {
     var reader = new FileReader();
+    setflag(true)
     if (file) {
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -219,11 +221,17 @@ const AddProduct = () => {
               label="Price:"
               name="room.Price"
               onChange={(e) => {
-                var value={Price:e.target.value}
-                setroom(shopCart => ({
-                ...shopCart,
-                ...value
-              }))}}
+                if(!isNaN(e.target.value)){
+                  var value={Price:e.target.value}
+                  setroom(shopCart => ({
+                  ...shopCart,
+                  ...value
+                }))
+                }
+                else{
+                  alert("Enter Number")
+                }
+                }}
               value={room.Price}
             />
             <Button
@@ -241,6 +249,8 @@ const AddProduct = () => {
 
             {Rooms?.map((item,ind)=>(
             <div style={{display:'flex',flexDirection:'row',borderWidth:2,borderColor:'black',borderRadius:2,padding:7,alignSelf:'center'}}>
+            <label className="text-secondary" style={{marginRight:10,fontWeight:'bold'}}>Id: </label>
+            <p style={{marginRight:20}}>{item.id}</p>
             <label className="text-secondary" style={{marginRight:10,fontWeight:'bold'}}>Type: </label>
             <p style={{marginRight:20}}>{item.Type}</p>
             <label className="text-secondary" style={{marginRight:10,fontWeight:'bold'}}>Size: </label>
@@ -396,6 +406,7 @@ const AddProduct = () => {
                   encodeFileBase64(e.target.files[0]);
                 }} />
       </label>
+
       <Button
           type="button"
           onClick={() => {
@@ -404,6 +415,15 @@ const AddProduct = () => {
         >
           Upload
         </Button>
+        {
+                fileBase64String?
+                <p>Uploaded</p>:
+                flag?
+                <p>Uploading</p>
+                :
+                <p></p>
+
+              }
             </div>
            
             
