@@ -8,17 +8,18 @@ import Input from "../Components/UI/Input";
 import TextArea from "../Components/UI/TextArea";
 import Button from "../Components/UI/Button";
 import Backdrop from "../Components/UI/BackdropModal";
-
+import Spinner from "../Components/UI/Spinner";
 const AddProduct = () => {
   const navigate = useNavigate();
 
   const [showModal, setShowModal] = useState(false);
   const [productPic, setProductPic] = useState(null);
   const [fileBase64String, setFileBase64String] = useState("");
-
+  const [flag,setflag]=useState(false)
   const encodeFileBase64 = (file) => {
     var reader = new FileReader();
     if (file) {
+      setflag(true)
       reader.readAsDataURL(file);
       reader.onload = () => {
         var Base64 = reader.result;
@@ -37,7 +38,7 @@ const AddProduct = () => {
       price: 0,
       description: "",
       rating: 0,
-      productImage: fileBase64String,
+      productImage: "",
     },
     enableReinitialize: true,
     onSubmit: async (values) => {
@@ -46,10 +47,10 @@ const AddProduct = () => {
         values.title &&
         values.price &&
         values.description &&
-        values.rating &&
-        values.productImage &&
-        values.productImage
+        values.rating 
+      
       ) {
+        values.productImage=fileBase64String
         await productService.addProduct(values);
         navigate("/dashboard/products");
       }
@@ -63,9 +64,9 @@ const AddProduct = () => {
           onSubmit={formik.handleSubmit}
           className="flex flex-col flex-wrap gap-6 px-6 lg:px-14"
         >
-          <h1 className="text-2xl">Edit User</h1>
+          <h1 className="text-2xl">Add Product</h1>
           <section className={`flex flex-col flex-wrap gap-6 `}>
-            <div className="flex items-center gap-6 mr-4">
+          <div className="flex items-center gap-6 mr-4">
               {fileBase64String ? (
                 <img
                   src={fileBase64String}
@@ -75,32 +76,29 @@ const AddProduct = () => {
               ) : (
                 <div className="h-14 w-14 bg-slate-300 rounded-full" />
               )}
-               <label
-        className="block  py-1 px-2 cursor-pointer rounded text-center min-w-[8rem] max-w-[10rem]
-        border-2 border-dashed border-primary 
-        hover:border-3 hover:border-dashed hover:border-primary 
-        transition ease-out duration-1000"
-      >
-        <span className="text-sm">
-          {productPic?.name ? productPic?.name : "Choose image"}
-        </span>
-        <input className="hidden" type="file" name={productPic?.name}  onChange={(e) => {
-                  setProductPic(e.target.files[0])
-                  encodeFileBase64(productPic)
-                }} />
-      </label>
+          
+              <InputFile
+                name="imagePath"
+                imageName={productPic?.name}
+                onChange={(e) => {
+                  setProductPic(e.target.files[0]);
+                }}
+                onUpload={() => {
+                  encodeFileBase64(productPic);
+                }}
+              >
+                Upload
+              </InputFile>
+              {
+                fileBase64String?
+                <p>Uploaded</p>:
+                flag?
+                <div className="z-30 m-auto mt-20">
+                <Spinner />
+              </div>:
+                <p></p>
 
-    
-        <Button
-          type="button"
-          //onClick={() => {
-          //  encodeFileBase64(productPic);
-          //}}
-        >
-          Upload
-        </Button>
-    
-             
+              }
             </div>
             <Input
               width="full"
@@ -140,11 +138,11 @@ const AddProduct = () => {
             <Button
               type="button"
               onClick={() => {
-                if((formik.values.rating<5 && formik.values.rating>0) && (formik.values.price>0 )){
+                if((formik.values.rating<5 && formik.values.rating>0) && (formik.values.price>0 ) && formik.values.description!="" && formik.values.title!="" && fileBase64String!=""){
                   setShowModal(true);
                 }
                 else{
-                  alert("Enter valid Data")
+                  alert("Enter Data")
 
                 }
               }}

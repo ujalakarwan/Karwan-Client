@@ -9,11 +9,13 @@ import InputFile from "../Components/UI/InputFile";
 import userService from "../api/users.api";
 import * as yup from "yup";
 import TextField from "@mui/material/TextField";
-
+import Spinner from "../Components/UI/Spinner";
 const AddUser = () => {
   const navigate = useNavigate();
   const [error,seterror]=useState()
   const [showModal, setShowModal] = useState(false);
+  const [showUserModal, setShowUserModal] = useState(false);
+  const [flag,setflag]=useState(false)
   const [profilePic, setProfilePic] = useState(null);
   const [fileBase64String, setFileBase64String] = useState("");
   const validationSchema = yup.object({
@@ -28,6 +30,8 @@ const AddUser = () => {
   const encodeFileBase64 = (file) => {
     var reader = new FileReader();
     if (file) {
+      setflag(true)
+
       reader.readAsDataURL(file);
       reader.onload = () => {
         var Base64 = reader.result;
@@ -46,7 +50,7 @@ const AddUser = () => {
       email: "",
       contact: "",
       address: "",
-      profilePic: fileBase64String,
+      profilePic: "",
       password: "",
     },
     enableReinitialize: true,
@@ -54,6 +58,7 @@ const AddUser = () => {
 
     onSubmit: async (values) => {
       console.log(values);
+      values.profilePic=fileBase64String
       if (
         values.userName &&
         values.email &&
@@ -87,6 +92,7 @@ const AddUser = () => {
               ) : (
                 <div className="h-14 w-14 bg-slate-300 rounded-full" />
               )}
+          
               <InputFile
                 name="imagePath"
                 imageName={profilePic?.name}
@@ -99,6 +105,16 @@ const AddUser = () => {
               >
                 Upload
               </InputFile>
+              {
+                fileBase64String?
+                <p>Uploaded</p>:
+                flag?
+                <div className="z-30 m-auto mt-20">
+                <Spinner />
+              </div>:
+                <p></p>
+
+              }
             </div>
             
             <TextField
@@ -155,7 +171,7 @@ const AddUser = () => {
             
            
           </section>
-
+{(fileBase64String!="" && formik.values.userName!="" && formik.values.address!="" && formik.values.contact!="" && formik.values.password!="" && formik.values.email!="")?
           <div className="flex justify-end gap-8 mt-4">
             <Button
               type="button"
@@ -166,6 +182,18 @@ const AddUser = () => {
               <div className="text-base p-1">Add User</div>
             </Button>
           </div>
+:
+<div  className="flex justify-end gap-8 mt-4">
+            <Button
+            
+              type="button"
+              onClick={() => {
+                alert("Add Data!!")
+              }}
+            >
+              <div  className="text-base p-1">Add User</div>
+            </Button>
+          </div>}
           <Backdrop
             title="Add"
             show={showModal}
@@ -178,6 +206,8 @@ const AddUser = () => {
               </Button>
             </div>
           </Backdrop>
+          
+
         </form>
       </Card>
     </>

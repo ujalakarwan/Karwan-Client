@@ -28,9 +28,9 @@ const EditProduct = () => {
   const [productPic, setProductPic] = useState();
   const {state}=useLocation()
   const [total,setTotal]=useState(state.Vehicle?.Price)
-  const [startdate,setstartdate]=useState()
-  const [enddate,setenddate]=useState()
-  const [userid,setuserid]=useState()
+  const [startdate,setstartdate]=useState("")
+  const [enddate,setenddate]=useState("")
+  const [userid,setuserid]=useState("")
   const { docData: orders} = useFetchDoc(
     `/get-productCarts`
   );
@@ -128,10 +128,17 @@ const EditProduct = () => {
                 name="userid"
                 style={{width:"10%",marginLeft:20,marginRight:20}}
                 onChange={(e) => {
-                  setuserid(e.target.value)
+                  if(e.target.value==""){
+                    alert("Please select a user")
+                  }
+                  else{
+                    setuserid(e.target.value)
+
+                  }
                   }}
                 value={userid}
               >
+               <option value={""}></option>
                 {
                   users?.map((item)=>(
                     <option value={item?._id}>{item.userName}</option>
@@ -235,13 +242,20 @@ const EditProduct = () => {
            </div>
          
         </div>
-        
+        { (startdate!="" && enddate!="" && userid!="")?
+
           <div style={{marginTop:45,justifyContent:'center',placeContent:'center'}}>
             <Button onClick={Book} style={{ marginBottom: "10px",justifySelf:'center',height:"35%", width: 60, marginLeft: '90%', marginTop: 40,fontWeight:'bold',color:'white',backgroundColor:'darkblue' }} >
             Book
           </Button>
           </div>
-         
+          :
+          <div style={{marginTop:45,justifyContent:'center',placeContent:'center'}}>
+            <Button style={{ marginBottom: "10px",justifySelf:'center',height:"35%", width: 60, marginLeft: '90%', marginTop: 40,fontWeight:'bold',color:'white',backgroundColor:'grey'}} >
+            Book
+          </Button>
+          </div>
+}
       </Card>
     </>
   );

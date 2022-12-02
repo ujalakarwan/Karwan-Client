@@ -10,6 +10,8 @@ const addUser = async (formData) => {
   }
 };
 
+
+
 const updateUser = async (id, formData) => {
   try {
     const res = await API.patch(`/update-user/${id}`, formData);

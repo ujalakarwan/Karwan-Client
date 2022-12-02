@@ -11,7 +11,7 @@ import Backdrop from "../Components/UI/BackdropModal";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import GoogleMapReact from 'google-map-react';
 import { async } from "@firebase/util";
-
+import Spinner from "../Components/UI/Spinner";
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -214,8 +214,9 @@ const AddProduct = () => {
                 fileBase64String?
                 <p>Uploaded</p>:
                 flag?
-                <p>Uploading</p>
-                :
+                <div className="z-30 m-auto mt-20">
+                <Spinner />
+              </div>:
                 <p></p>
 
               }
@@ -238,6 +239,8 @@ const AddProduct = () => {
         />
       </GoogleMapReact>
               </div>*/}
+                      {(fileBase64String!="" && formik.values.Facilities!=""  && formik.values.Name!="")?
+
           <div className="flex justify-end gap-8 mt-4">
             <Button
               type="button"
@@ -248,6 +251,19 @@ const AddProduct = () => {
               <div className="text-base p-1">Add Transport</div>
             </Button>
           </div>
+          :
+          <div className="flex justify-end gap-8 mt-4">
+            <Button
+              type="button"
+              onClick={() => {
+                alert("Add Data")
+              }}
+            >
+              <div className="text-base p-1">Add Transport</div>
+            </Button>
+          </div>
+          
+          }
           <Backdrop
             title="Add"
             show={showModal}

@@ -13,6 +13,7 @@ import GoogleMapReact from 'google-map-react';
 import { async } from "@firebase/util";
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { FaMapMarkerAlt } from "react-icons/fa"
+import Spinner from "../Components/UI/Spinner";
 const AnyReactComponent = ({ text }) =><FaMapMarkerAlt/>;
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -419,14 +420,17 @@ const AddProduct = () => {
                 fileBase64String?
                 <p>Uploaded</p>:
                 flag?
-                <p>Uploading</p>
+                <div className="z-30 m-auto mt-20">
+                <Spinner />
+              </div>
                 :
                 <p></p>
 
               }
             </div>
            
-            
+        {(fileBase64String!="" && formik.values.Description!="" && formik.values.Facilities!="" && formik.values.Location!="" && formik.values.Name!="")?
+          
           <div className="flex justify-end gap-8 mt-4">
             <Button
               type="button"
@@ -436,7 +440,17 @@ const AddProduct = () => {
             >
               <div className="text-base p-1">Add Hotel</div>
             </Button>
-          </div>
+          </div>:
+          <div className="flex justify-end gap-8 mt-4">
+          <Button
+            type="button"
+            onClick={() => {
+              alert("Add Data!!")
+            }}
+          >
+            <div className="text-base p-1">Add Hotel</div>
+          </Button>
+        </div>}
           <Backdrop
             title="Add"
             show={showModal}

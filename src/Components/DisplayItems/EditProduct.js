@@ -52,11 +52,17 @@ const EditProduct = () => {
       price: product?.price,
       description: product?.description,
       rating: product?.rating,
-      productImage: product?.productImage,
+      productImage: "",
     },
     enableReinitialize: true,
     onSubmit: async (values) => {
       console.log(values);
+      if(!fileBase64String){
+        values.productImage=product?.images
+      }
+      else{
+        values.productImage=fileBase64String
+      }
       values.productImage=fileBase64String
       await productService.updateProduct(productId, values);
       navigate("/dashboard/products");

@@ -16,6 +16,7 @@ import AllBookings from "./Allhotelbookings"
 import AllTBookings from "./Alltransportbookings"
 import { Button, IconButton, InputAdornment } from "@mui/material";
 import userService from "../../api/users.api"
+import pdfservice from "../../api/pdf.api"
 const EditProduct = () => {
   const navigate = useNavigate();
   const  {productId}  = useParams();
@@ -54,6 +55,28 @@ const EditProduct = () => {
     `/get-wishlist`
   );
 
+  const Sendemail=async()=>{
+    const sendorders=orders.filter((item)=>item.user_id?._id==productId)
+    const sendhotels=hotelbooking.filter((item)=>item.user_id?._id==productId)
+    const sendtransports=transportbooking.filter((item)=>item.user_id?._id==productId)
+    const data={
+      user:{profilePic:user?.profilePic,Name:user?.userName,Contact:user?.contact,email:user?.email,address:user?.address},
+      family:user?.family,
+      visastatus:visa,
+      wishlist:wishlist,
+      group:group,
+      orders:sendorders,
+      hotels:sendhotels,
+      transport:sendtransports,
+      advances:Advance,
+      cheques:Cheques
+    }
+    console.log("data",data)
+    const res=await pdfservice.sendPdf(user?.email,data)
+    if(res.status==200){
+      alert("Email Sent!!")
+    }
+  }
   useEffect(() => {
     const a=visas?.find((item)=>item?.user_id==productId)
     if(a){
@@ -594,7 +617,7 @@ const EditProduct = () => {
           content={() => componentRef}
         />
 <div style={{marginTop:45,justifyContent:'center',placeContent:'center'}}>
-            <Button style={{ marginBottom: "10px",padding:20,justifySelf:'center',height:"35%", width: "100%", marginTop: 40,fontWeight:'bold',color:'white',backgroundColor:'darkblue' }} >
+            <Button onClick={Sendemail} style={{ marginBottom: "10px",padding:20,justifySelf:'center',height:"35%", width: "100%", marginTop: 40,fontWeight:'bold',color:'white',backgroundColor:'darkblue' }} >
             Email Report
           </Button>
           </div>
